@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-
+	
 public class Landertron : PartModule
 {
 	//[KSPField(guiActive = true, guiActiveEditor=true ,isPersistant=true),UI_FloatRange(maxValue=1.5f,minValue=0.5f,stepIncrement=0.05f)]
@@ -82,28 +82,28 @@ public class Landertron : PartModule
 	public override void OnAwake()
 	{
 		lcount = 0;
-
+		
 	}
 	public override void OnStart(PartModule.StartState state)
 	{
 		engine = this.part.Modules["ModuleEngines"] as ModuleEngines;
 
 		sf = this.part.Resources["SolidFuel"];
-		if (HighLogic.LoadedScene == GameScenes.SPH && mode == 0)
+		if (HighLogic.LoadedScene == GameScenes.EDITOR && mode == 0)
 		{ mode = 2; }
 		else if (HighLogic.LoadedScene == GameScenes.EDITOR && mode == 0)
 		{ mode = 1; }
 		switch(mode)
 		{
-		case 1:
-			ModeName = "Soft Landing";
-			break;
-		case 2:
-			ModeName = "Short Landing";
-			break;
-		case 3:
-			ModeName = "StayPut";
-			break;
+			case 1:
+				ModeName = "Soft Landing";
+				break;
+			case 2:
+				ModeName = "Short Landing";
+				break;
+			case 3:
+				ModeName = "StayPut";
+				break;
 		}
 		guifixer();
 		animStates = SetUpAnimation(AnimationName, this.part);
@@ -113,52 +113,52 @@ public class Landertron : PartModule
 	//private void onJointBreak(EventReport eventreport)
 	//{ print("Something detatched! ");}
 	/*[KSPEvent(guiName = "Refuel",guiActive=false ,externalToEVAOnly = true, guiActiveUnfocused = true, unfocusedRange = 3.0f)]
-    public void Refuel()
-    {
-        double sf_available = 0;
-        int containercount=0;
-        foreach (Part p in vessel.parts)
-        {
-            if (!p.Modules.Contains("Landertron") && p.Resources.Contains("SolidFuel"))
-            {
-                PartResource sfp = p.Resources["SolidFuel"];
-                sf_available += sfp.amount;
-                containercount++;
-            }
-        }
-                //print("avail: " + sf_available);
-        double sf_needed = sf.maxAmount - sf.amount;
-        double sf_added = Math.Min(sf_available, sf_needed);
-        sf.amount += sf_added;
-        foreach (Part p in vessel.parts)
-        {
-            if (!p.Modules.Contains("Landertron") && p.Resources.Contains("SolidFuel"))
-            {
-                PartResource sfp = p.Resources["SolidFuel"];
-                sfp.amount -= sf_added/containercount;
+	public void Refuel()
+	{
+		double sf_available = 0;
+		int containercount=0;
+		foreach (Part p in vessel.parts)
+		{
+			if (!p.Modules.Contains("Landertron") && p.Resources.Contains("SolidFuel"))
+			{
+				PartResource sfp = p.Resources["SolidFuel"];
+				sf_available += sfp.amount;
+				containercount++;
+			}
+		}
+				//print("avail: " + sf_available);
+		double sf_needed = sf.maxAmount - sf.amount;
+		double sf_added = Math.Min(sf_available, sf_needed);
+		sf.amount += sf_added;
+		foreach (Part p in vessel.parts)
+		{
+			if (!p.Modules.Contains("Landertron") && p.Resources.Contains("SolidFuel"))
+			{
+				PartResource sfp = p.Resources["SolidFuel"];
+				sfp.amount -= sf_added/containercount;
 
-            }
-        }
-        justrefueled = true;
-        animdeployed = false;
-    }*/
+			}
+		}
+		justrefueled = true;
+		animdeployed = false;
+	}*/
 	public void Refuel()
 	{
 		/*int ccount = 0;
-        foreach (Part p in this.part.children)
-        {
-            print("name: "+p.name);
-            p.Die();
-            //p.explosionPotential = 0;
-            //p.explode();
-            //ccount++;
-        }*/
+		foreach (Part p in this.part.children)
+		{
+			print("name: "+p.name);
+			p.Die();
+			//p.explosionPotential = 0;
+			//p.explode();
+			//ccount++;
+		}*/
 		for (int i = 0; i < this.part.children.Count; )
 		{
 			Part p = this.part.children[i];
 			if (p.Resources.Contains("SolidFuel") && sf.amount < sf.maxAmount)
 			{
-
+				
 				PartResource sfp = p.Resources["SolidFuel"];
 				sf.amount = Math.Min(sf.amount + sfp.amount, sf.maxAmount);
 				//print("name: " + p.name);
@@ -170,26 +170,26 @@ public class Landertron : PartModule
 		}
 
 		/*if (ccount > 0)
-        {
-            for (int i = 0; i < ccount; i++)
-            {
-                print("name: " + this.part.children   (i).name);
-            }
-        }*/
+		{
+			for (int i = 0; i < ccount; i++)
+			{
+				print("name: " + this.part.children   (i).name);
+			}
+		}*/
 	}
 	[KSPEvent(guiName = "Soft Landing", guiActiveEditor = true, guiActiveUnfocused = false, guiActive = false)]
 	public void ClassicMode()
 	{
 		mode = 1;
 		ModeName = "Soft Landing";
-		forAllSym();        
+		forAllSym();		
 	}
 	[KSPEvent(guiName = "Short Landing", guiActiveEditor = true, guiActiveUnfocused = false, guiActive = false)]
 	public void VSL()
 	{
 		mode = 2;
 		ModeName = "Short Landing";
-		forAllSym();        
+		forAllSym();		
 	}
 	[KSPEvent(guiName = "StayPut", guiActiveEditor = true, guiActiveUnfocused = false, guiActive = false)]
 	public void SP()
@@ -204,12 +204,12 @@ public class Landertron : PartModule
 		this.part.decouple(2000);
 	}
 	/*[KSPEvent(guiName = "Escape!", guiActiveEditor = true, guiActiveUnfocused = false, guiActive = true)]
-    public void escape()
-    {
-        mode = 4;
-        ModeName = "Escape!";
-        forAllSym();
-    }*/
+	public void escape()
+	{
+		mode = 4;
+		ModeName = "Escape!";
+		forAllSym();
+	}*/
 	[KSPAction("Arm")]
 	public void armaction(KSPActionParam param)
 	{
@@ -221,45 +221,45 @@ public class Landertron : PartModule
 		this.part.decouple(2000);
 	}
 	/*[KSPAction("Abort", KSPActionGroup.Abort)]
-    public void abort()
-    {
-        if (mode==4)
-        {
-            foreach (Part p in vessel.parts)
-            {
-                if (p.Modules.Contains("ModuleDecouple"))
-                {
-                    ModuleDecouple dec=p.Modules["ModuleDecouple"] as ModuleDecouple;
-                    dec.Decouple();
-                }
-            }
-        engine.Activate();
-        }
-    }*/
+	public void abort()
+	{
+		if (mode==4)
+		{
+			foreach (Part p in vessel.parts)
+			{
+				if (p.Modules.Contains("ModuleDecouple"))
+				{
+					ModuleDecouple dec=p.Modules["ModuleDecouple"] as ModuleDecouple;
+					dec.Decouple();
+				}
+			}
+		engine.Activate();
+		}
+	}*/
 	public void Update()
 	{
 		if (HighLogic.LoadedSceneIsEditor)
 		{
 			guifixer();
-
+			
 			/*totalmass = 0;
-            totalfuelmass = 0;
-            foreach (Part p in EditorLogic.SortedShipList)
-            {
-                if (p.Modules.Contains("Landertron") && p.inverseStage == this.part.inverseStage)
-                {
-                    ltron = p.Modules["Landertron"] as Landertron;
-                    if (ltron.mode == mode)
-                    {
-                        totalfuelmass = totalfuelmass+p.GetResourceMass();
-                        
-                    }
-                }
-                totalmass = totalmass+p.GetResourceMass()+p.mass;
-            }
-            //print("fuel: " + totalfuelmass);
-            //print("ln: " + Mathf.Log(totalmass / (totalmass - totalfuelmass)));
-            deltaV = engine.atmosphereCurve.Evaluate(1) * 9.81f * Mathf.Log(totalmass / (totalmass - totalfuelmass));*/
+			totalfuelmass = 0;
+			foreach (Part p in EditorLogic.SortedShipList)
+			{
+				if (p.Modules.Contains("Landertron") && p.inverseStage == this.part.inverseStage)
+				{
+					ltron = p.Modules["Landertron"] as Landertron;
+					if (ltron.mode == mode)
+					{
+						totalfuelmass = totalfuelmass+p.GetResourceMass();
+						
+					}
+				}
+				totalmass = totalmass+p.GetResourceMass()+p.mass;
+			}
+			//print("fuel: " + totalfuelmass);
+			//print("ln: " + Mathf.Log(totalmass / (totalmass - totalfuelmass)));
+			deltaV = engine.atmosphereCurve.Evaluate(1) * 9.81f * Mathf.Log(totalmass / (totalmass - totalfuelmass));*/
 		}
 
 
@@ -272,20 +272,20 @@ public class Landertron : PartModule
 
 			if (p.Modules.Contains("Landertron") && p.inverseStage==this.part.inverseStage && p.GetResourceMass()>0)
 			{
-
+				
 				ltron=p.Modules["Landertron"] as Landertron;
 				if (ltron.mode == mode)
 				{
 					lcount = lcount + 1;
-
+					
 				}
 			}
-
+			
 		}
 		//partanglethrust = Vector3d.Dot(this.part.transform.up.normalized, this.vessel.transform.up.normalized);
 
 		animdeployed = true;
-
+		
 	}
 	public override void OnUpdate()
 	{
@@ -294,14 +294,14 @@ public class Landertron : PartModule
 		{
 			//if (globaljustrefueled)
 			//{ 
-			//    Staging.AddStageAt(0);
-			//    globaljustrefueled = false;
+			//	Staging.AddStageAt(0);
+			//	globaljustrefueled = false;
 			//}
 			//int c = 0;
 			//int stg = Staging.CurrentStage;
 			//if (stg == c)
 			//{ Staging.AddStageAt(0); }
-
+			
 			//this.part.stackIcon.SetIconColor(XKCDColors.White);
 			Status = "Idle";
 			this.part.deactivate();
@@ -313,7 +313,7 @@ public class Landertron : PartModule
 			//Staging.RecalculateVesselStaging(this.vessel);
 			justrefueled = false;
 
-
+			
 		}
 		if (refuelable)
 		{
@@ -340,7 +340,7 @@ public class Landertron : PartModule
 	public override void OnFixedUpdate()
 	{
 
-
+		
 		//if (engine.maxThrust != 0 && engine.maxThrust != thrust)
 		//{ thrust = engine.maxThrust; }
 
@@ -354,18 +354,24 @@ public class Landertron : PartModule
 		foreach (var t in engine.thrustTransforms)
 		{ thrustp -= t.forward / engine.thrustTransforms.Count; }
 
-		Vector3 fwd = HighLogic.LoadedScene == GameScenes.EDITOR ? Vector3d.up : (HighLogic.LoadedScene == GameScenes.SPH ? Vector3d.forward : (Vector3d)engine.part.vessel.GetTransform().up);
+		//--TheDog: 03.05.2015: FIXED: KSP 1.0.2 has no more GameScenes.SPH--
+		Vector3 fwd = HighLogic.LoadedScene == GameScenes.EDITOR ? Vector3d.up : (Vector3d)engine.part.vessel.GetTransform().up;
+
 		partanglethrust = Vector3.Dot(fwd, thrustp);
 		acc = this.vessel.acceleration;
 		vaccel = Vector3d.Dot(acc, up);
 		totalthrust = engine.maxThrust * partanglethrust * vesselanglethrust * lcount * (engine.thrustPercentage / 100);
 		//print(totalthrust);
 		totalfuelmass = lcount * (float)sf.amount * 0.0075f; //this.part.GetResourceMass();
-		isp = engine.atmosphereCurve.Evaluate((float)this.vessel.staticPressure);
+
+		//--TheDog: 03.05.2015: FIXED: KSP 1.0.2 has no more staticPressure--
+		//isp = engine.atmosphereCurve.Evaluate((float)this.vessel.staticPressure);
+		isp = engine.atmosphereCurve.Evaluate((float)this.vessel.mainBody.GetPressure(this.height())); 
+
 		deltaV = isp * 9.81f * Mathf.Log(this.vessel.GetTotalMass() / (this.vessel.GetTotalMass() - totalfuelmass)) * partanglethrust;
 		//burntime = this.part.GetResourceMass() / (engine.maxThrust / isp);
 		burntime = (float)sf.amount *0.0075f / (engine.maxThrust*(engine.thrustPercentage/100) / (isp*9.81f));
-
+		
 		elec_dem = electricrate * TimeWarp.fixedDeltaTime;
 		elec_rec = elec_dem;
 		if (sf.amount > 0.1)
@@ -438,91 +444,91 @@ public class Landertron : PartModule
 	{
 		switch (mode)
 		{
-		case 1:
-			//Classic
-			warning = -v - endspeed > deltaV * vesselanglethrust;
-			if (vesselanglethrust < 0.2)
-			{
-				dmin = 0;
-			}
-			//else if (warning)
-			//{
-			//double realend = v + deltaV * vesselanglethrust;
-			//dmin = -1* (realend * realend - v * v) / (2 * (totalthrust / m + vaccel));
-			//dmin = -(v * burntime + 0.5 * (totalthrust / m + vaccel) * burntime * burntime);
-			//dmin = -v * burntime;
-			//}
-			else if (v + (totalthrust / m + vaccel) * burntime > -endspeed)
-			{
+			case 1:
+				//Classic
+				warning = -v - endspeed > deltaV * vesselanglethrust;
+				if (vesselanglethrust < 0.2)
+				{
+					dmin = 0;
+				}
+				//else if (warning)
+				//{
+					//double realend = v + deltaV * vesselanglethrust;
+					//dmin = -1* (realend * realend - v * v) / (2 * (totalthrust / m + vaccel));
+					//dmin = -(v * burntime + 0.5 * (totalthrust / m + vaccel) * burntime * burntime);
+					//dmin = -v * burntime;
+				//}
+				else if (v + (totalthrust / m + vaccel) * burntime > -endspeed)
+				{
 
-				dmin = -1 * (endspeed * endspeed - v * v) / (2 * (totalthrust * 0.90 / m + vaccel));
-			}
-			else
-			{
-				dmin = -(v * burntime + 0.5 * (totalthrust / m + vaccel) * burntime * burntime);
-			}
-			//double dfullburn = -(v + Math.Max(v + (totalthrust / m + vaccel) * burntime,0)) * burntime / 2;
-			//double dfullburn = -(v * burntime + Math.Max(0.5 * (totalthrust / m + vaccel) * burntime * burntime,0));
-			if (!firing)
-			{ backgroundaccel = vaccel; }
-			dfinal = dmin; //* heightmultiplier + offset;
-			//dfinal = Math.Min(dmin, dfullburn);
-			displayd = (float)dfinal;
-			arm = !firing;
-			float h = height();
-			fire = h < dfinal && v < -1 && !this.vessel.Landed && sf.amount > 0;// && (h/v)<burntime;
-			//end = (h < endheight || v > -1 * endspeed || sf.amount == 0) && firing;
-			if (!firing)
-			{
-				//print("w: " + warning + " dmin: " + dmin + " vf: " + (v + (totalthrust / m + vaccel) * burntime));
-			}
-			end = (h < 0.1 || v > -1 * endspeed || sf.amount == 0) && firing;
+					dmin = -1 * (endspeed * endspeed - v * v) / (2 * (totalthrust * 0.90 / m + vaccel));
+				}
+				else
+				{
+					dmin = -(v * burntime + 0.5 * (totalthrust / m + vaccel) * burntime * burntime);
+				}
+				//double dfullburn = -(v + Math.Max(v + (totalthrust / m + vaccel) * burntime,0)) * burntime / 2;
+				//double dfullburn = -(v * burntime + Math.Max(0.5 * (totalthrust / m + vaccel) * burntime * burntime,0));
+				if (!firing)
+				{ backgroundaccel = vaccel; }
+				dfinal = dmin; //* heightmultiplier + offset;
+				//dfinal = Math.Min(dmin, dfullburn);
+				displayd = (float)dfinal;
+				arm = !firing;
+				float h = height();
+				fire = h < dfinal && v < -1 && !this.vessel.Landed && sf.amount > 0;// && (h/v)<burntime;
+				//end = (h < endheight || v > -1 * endspeed || sf.amount == 0) && firing;
+				if (!firing)
+				{
+					//print("w: " + warning + " dmin: " + dmin + " vf: " + (v + (totalthrust / m + vaccel) * burntime));
+				}
+				end = (h < 0.1 || v > -1 * endspeed || sf.amount == 0) && firing;
+				
+				double areq = endspeed * endspeed -v * v / (2 * -1 * h) - backgroundaccel;
+				double adiff = areq - vaccel;
+				//float throt=areq * m / totalthrust;
+				if (firing)
+				{
+					engine.throttleLocked = false;
+					engine.useEngineResponseTime = true;
+					engine.engineAccelerationSpeed = 0.0f;
+					engine.engineDecelerationSpeed = 0.0f;
+					//engine.currentThrottle = Mathf.Min((float)(areq * m / totalthrust), 0);
+					//engine.currentThrottle = Mathf.Clamp(engine.currentThrottle + (float)(adiff * m / (vesselanglethrust * partanglethrust * engine.maxThrust)), 0, 1);
+					//engine.currentThrottle = Mathf.Clamp(engine.currentThrottle + (float)(adiff * m / totalthrust), 0, 1);
+					engine.currentThrottle = Mathf.Clamp((float)(areq * m *(engine.thrustPercentage/100) / totalthrust), 0, 1);
+					//print(engine.requestedThrust);
+					//print("areq: " + areq + " adiff: " + adiff);
+					//print("v: " + v + " h: " + h + " rthrot: " + (areq * m / totalthrust));
+					//print("Fuel: "+sf.amount+" v: " +v);
+					//engine.throttleLocked = true;
+				}
 
-			double areq = endspeed * endspeed -v * v / (2 * -1 * h) - backgroundaccel;
-			double adiff = areq - vaccel;
-			//float throt=areq * m / totalthrust;
-			if (firing)
-			{
-				engine.throttleLocked = false;
-				engine.useEngineResponseTime = true;
-				engine.engineAccelerationSpeed = 0.0f;
-				engine.engineDecelerationSpeed = 0.0f;
-				//engine.currentThrottle = Mathf.Min((float)(areq * m / totalthrust), 0);
-				//engine.currentThrottle = Mathf.Clamp(engine.currentThrottle + (float)(adiff * m / (vesselanglethrust * partanglethrust * engine.maxThrust)), 0, 1);
-				//engine.currentThrottle = Mathf.Clamp(engine.currentThrottle + (float)(adiff * m / totalthrust), 0, 1);
-				engine.currentThrottle = Mathf.Clamp((float)(areq * m *(engine.thrustPercentage/100) / totalthrust), 0, 1);
-				//print(engine.requestedThrust);
-				//print("areq: " + areq + " adiff: " + adiff);
-				//print("v: " + v + " h: " + h + " rthrot: " + (areq * m / totalthrust));
-				//print("Fuel: "+sf.amount+" v: " +v);
-				//engine.throttleLocked = true;
-			}
+				break;
+			case 2:
+				//Space Plane
+				double vh = this.vessel.srf_velocity.magnitude;
 
-			break;
-		case 2:
-			//Space Plane
-			double vh = this.vessel.srf_velocity.magnitude;
+				arm = !firing;
+				fire = this.vessel.Landed && !prevland && sf.amount > 0;
+				end = (vh < endspeed || vh_prev<vh ||sf.amount <= 0) && firing;
+				warning = vh > -deltaV;
+				//if (firing)
+				//{ print("vh: " + vh); }
+				vh_prev = vh;
+				break;
+			case 3:
+				//StayPut
+				double staydir = vesselanglethrust;// Vector3d.Dot(this.part.transform.up.normalized, up);
 
-			arm = !firing;
-			fire = this.vessel.Landed && !prevland && sf.amount > 0;
-			end = (vh < endspeed || vh_prev<vh ||sf.amount <= 0) && firing;
-			warning = vh > -deltaV;
-			//if (firing)
-			//{ print("vh: " + vh); }
-			vh_prev = vh;
-			break;
-		case 3:
-			//StayPut
-			double staydir = vesselanglethrust;// Vector3d.Dot(this.part.transform.up.normalized, up);
-
-			arm = !firing;
-			fire = this.vessel.Landed  && sf.amount > 0; //&& v > 0.1
-			end = (staydir<0.1 || sf.amount < 0.1) && firing;
-			warning = false;
-
-			break;
-		default:
-			break;
+				arm = !firing;
+				fire = this.vessel.Landed  && sf.amount > 0; //&& v > 0.1
+				end = (staydir<0.1 || sf.amount < 0.1) && firing;
+				warning = false;
+				
+				break;
+			default:
+				break;
 		}
 	}
 	protected float height()
@@ -573,7 +579,7 @@ public class Landertron : PartModule
 			Fields["ModeName"].guiActiveEditor = false;
 			Fields["Status"].guiActive = false;
 			Fields["displayd"].guiActive = false;
-
+			
 		}
 		else if (mode == 1 || mode==2)
 		{
