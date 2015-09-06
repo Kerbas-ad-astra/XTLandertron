@@ -1,4 +1,21 @@
-﻿using System;
+﻿/* Copyright 2015 XanderTek (contributions by TheDog & Kerbas_ad_astra).
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,6 +64,7 @@ public class Landertron : PartModule
 	public double backgroundaccel = 0;
 	public double vh_prev = 1000;
 	public double v = 0;
+	public const double SHORT_LANDING_VEL_TOL = 0.5;  //To stop jitter from causing short-landing rockets to give up prematurely.
 	[KSPField(isPersistant = false, guiActive = true, guiName = "Braking Distance", guiUnits = "m")]
 	public float displayd = 0;
 	public double dfinal = 0;
@@ -366,9 +384,13 @@ public class Landertron : PartModule
 
 		//--TheDog: 03.05.2015: FIXED: KSP 1.0.2 has no more staticPressure--
 		//isp = engine.atmosphereCurve.Evaluate((float)this.vessel.staticPressure);
-		isp = engine.atmosphereCurve.Evaluate((float)this.vessel.mainBody.GetPressure(this.height())); 
+		isp = engine.atmosphereCurve.Evaluate((float)(this.vessel.staticPressurekPa*PhysicsGlobals.KpaToAtmospheres));
 
 		deltaV = isp * 9.81f * Mathf.Log(this.vessel.GetTotalMass() / (this.vessel.GetTotalMass() - totalfuelmass)) * partanglethrust;
+		#if DEBUG
+			print ("deltaV: " + deltaV + " partanglethrust: " + partanglethrust + " isp: " + isp);
+		#else
+		#endif
 		//burntime = this.part.GetResourceMass() / (engine.maxThrust / isp);
 		burntime = (float)sf.amount *0.0075f / (engine.maxThrust*(engine.thrustPercentage/100) / (isp*9.81f));
 		
@@ -397,7 +419,10 @@ public class Landertron : PartModule
 			{ this.part.explode(); }
 			else
 			{
-				//print("venting " + sf.amount + " fuel");
+				#if DEBUG
+					print ("venting " + sf.amount + " fuel");
+				#else
+				#endif
 				sf.amount = 0; 
 			}
 			firing = false;
@@ -480,9 +505,12 @@ public class Landertron : PartModule
 				//end = (h < endheight || v > -1 * endspeed || sf.amount == 0) && firing;
 				if (!firing)
 				{
-					//print("w: " + warning + " dmin: " + dmin + " vf: " + (v + (totalthrust / m + vaccel) * burntime));
+					#if DEBUG
+						print ("w: " + warning + " dmin: " + dmin + " vf: " + (v + (totalthrust / m + vaccel) * burntime));
+					#else
+					#endif
 				}
-				end = (h < 0.1 || v > -1 * endspeed || sf.amount == 0) && firing;
+				end = (h < 0.1 || v > -1 * endspeed || sf.amount <= 0) && firing;
 				
 				double areq = endspeed * endspeed -v * v / (2 * -1 * h) - backgroundaccel;
 				double adiff = areq - vaccel;
@@ -497,26 +525,38 @@ public class Landertron : PartModule
 					//engine.currentThrottle = Mathf.Clamp(engine.currentThrottle + (float)(adiff * m / (vesselanglethrust * partanglethrust * engine.maxThrust)), 0, 1);
 					//engine.currentThrottle = Mathf.Clamp(engine.currentThrottle + (float)(adiff * m / totalthrust), 0, 1);
 					engine.currentThrottle = Mathf.Clamp((float)(areq * m *(engine.thrustPercentage/100) / totalthrust), 0, 1);
-					//print(engine.requestedThrust);
-					//print("areq: " + areq + " adiff: " + adiff);
-					//print("v: " + v + " h: " + h + " rthrot: " + (areq * m / totalthrust));
-					//print("Fuel: "+sf.amount+" v: " +v);
+					
+					#if DEBUG
+						print(engine.GetCurrentThrust());
+						print("areq: " + areq + " adiff: " + adiff);
+						print("v: " + v + " h: " + h + " rthrot: " + (areq * m / totalthrust));
+						print("Fuel: "+sf.amount+" v: " +v);
+					#else
+					#endif
 					//engine.throttleLocked = true;
 				}
-
 				break;
+
 			case 2:
 				//Space Plane
 				double vh = this.vessel.srf_velocity.magnitude;
 
 				arm = !firing;
 				fire = this.vessel.Landed && !prevland && sf.amount > 0;
-				end = (vh < endspeed || vh_prev<vh ||sf.amount <= 0) && firing;
+				if (fire) {
+					vh_prev = vh + 0.1; //To stop the system from immediately giving up.
+				}
+			end = (vh < endspeed || vh - vh_prev > SHORT_LANDING_VEL_TOL || sf.amount <= 0) && firing;
 				warning = vh > -deltaV;
-				//if (firing)
-				//{ print("vh: " + vh); }
+				if(firing) {
+					#if DEBUG
+						print ("vh: " + vh + " vh_prev: " + vh_prev);
+					#else
+					#endif
+				}
 				vh_prev = vh;
 				break;
+
 			case 3:
 				//StayPut
 				double staydir = vesselanglethrust;// Vector3d.Dot(this.part.transform.up.normalized, up);
@@ -527,6 +567,7 @@ public class Landertron : PartModule
 				warning = false;
 				
 				break;
+
 			default:
 				break;
 		}
