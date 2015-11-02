@@ -217,10 +217,10 @@ namespace Landertron
 
         public override void OnStart(PartModule.StartState state)
         {
-            engine = this.part.Modules["ModuleEngines"] as ModuleEngines;
+            engine = part.Modules["ModuleEngines"] as ModuleEngines;
             engine.manuallyOverridden = true;
-            solidFuel = this.part.Resources["SolidFuel"];
-            animStates = setUpAnimation(animationName, this.part);
+            solidFuel = part.Resources["SolidFuel"];
+            animStates = setUpAnimation(animationName, part);
         }
 
         public override void OnActive()
@@ -339,9 +339,9 @@ namespace Landertron
         private void refuel()
         {
             bool justrefueled = false;
-            for (int i = 0; i < this.part.children.Count; )
+            for (int i = 0; i < part.children.Count; )
             {
-                Part p = this.part.children[i];
+                Part p = part.children[i];
                 if (p.Resources.Contains("SolidFuel") && solidFuel.amount < solidFuel.maxAmount)
                 {
                     PartResource sfp = p.Resources["SolidFuel"];
@@ -365,7 +365,7 @@ namespace Landertron
 
         private void forAllSym()
         {
-            foreach (Part p in this.part.symmetryCounterparts)
+            foreach (Part p in part.symmetryCounterparts)
             {
                 Landertron ltron = p.Modules["Landertron"] as Landertron;
                 ltron.mode = mode;
