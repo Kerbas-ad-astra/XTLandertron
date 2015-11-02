@@ -218,6 +218,12 @@ namespace Landertron
         public override void OnStart(PartModule.StartState state)
         {
             engine = part.Modules["ModuleEngines"] as ModuleEngines;
+            if (engine == null)
+                engine = part.Modules["ModuleEnginesFX"] as ModuleEngines;
+            if (engine == null)
+                engine = part.Modules["ModuleEnginesRF"] as ModuleEngines;
+            if (engine == null)
+                error("No engine found! Will crash!");
             engine.manuallyOverridden = true;
             solidFuel = part.Resources["SolidFuel"];
             animStates = setUpAnimation(animationName, part);
@@ -428,6 +434,11 @@ namespace Landertron
         private void info(string message)
         {
             Debug.Log("[Landertron] " + message);
+        }
+
+        private void error(string message)
+        {
+            Debug.LogError("[Landertron] " + message);
         }
     }
 
