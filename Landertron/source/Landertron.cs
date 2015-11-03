@@ -152,7 +152,6 @@ namespace Landertron
         {
             if (status != Status.Idle)
                 throw new InvalidOperationException("Can only be armed when Idle, was " + status.ToString());
-            animDeployed = true;
             status = Status.Armed;
             part.force_activate();
         }
@@ -167,7 +166,6 @@ namespace Landertron
         {
             if (status != Status.Armed)
                 throw new InvalidOperationException("Can only be disarmed when Armed, was " + status.ToString());
-            animDeployed = false;
             status = Status.Idle;
         }
         [KSPAction("Disarm")]
@@ -187,27 +185,18 @@ namespace Landertron
             decouple();
         }
 
+        public override void OnAwake()
+        {
+            setMode(Mode.SoftLanding);
+            setStatus(Status.Idle);
+        }
+
         public override void OnLoad(ConfigNode node)
         {
             if (node.HasValue("mode"))
-            {   // if mode is set in config (usually in craft or persistence) load from it
                 setMode((Mode)ConfigNode.ParseEnum(typeof(Mode), node.GetValue("mode")));
-            }
-            else if (HighLogic.LoadedSceneIsEditor)
-            {   // else try to guess the mode based on VAB vs SPH
-                if (HighLogic.CurrentGame.editorFacility == EditorFacility.VAB)
-                {
-                    setMode(Mode.SoftLanding);
-                }
-                else if (HighLogic.CurrentGame.editorFacility == EditorFacility.SPH)
-                {
-                    setMode(Mode.ShortLanding);
-                }
-            }
             if (node.HasValue("status"))
-            {
                 setStatus((Status)ConfigNode.ParseEnum(typeof(Status), node.GetValue("status")));
-            }
         }
 
         public override void OnSave(ConfigNode node)
@@ -313,6 +302,7 @@ namespace Landertron
                 case Status.Idle:
                     displayStatus = "Idle";
                     part.stackIcon.SetIconColor(XKCDColors.White);
+                    animDeployed = false;
                     Events["arm"].active = true;
                     Events["disarm"].active = false;
                     Actions["armAction"].active = true;
@@ -321,6 +311,7 @@ namespace Landertron
                 case Status.Armed:
                     displayStatus = "Armed";
                     part.stackIcon.SetIconColor(XKCDColors.LightCyan);
+                    animDeployed = true;
                     Events["arm"].active = false;
                     Events["disarm"].active = true;
                     Actions["armAction"].active = false;
@@ -329,6 +320,7 @@ namespace Landertron
                 case Status.Firing:
                     displayStatus = "Firing!";
                     part.stackIcon.SetIconColor(XKCDColors.RadioactiveGreen);
+                    animDeployed = true;
                     Events["arm"].active = false;
                     Events["disarm"].active = false;
                     Actions["armAction"].active = false;
@@ -337,6 +329,7 @@ namespace Landertron
                 case Status.Empty:
                     displayStatus = "Empty";
                     part.stackIcon.SetIconColor(XKCDColors.DarkGrey);
+                    animDeployed = true;
                     Events["arm"].active = false;
                     Events["disarm"].active = false;
                     Actions["armAction"].active = false;
@@ -367,7 +360,6 @@ namespace Landertron
             {
                 part.deactivate();
                 part.inverseStage = 0;
-                animDeployed = false;
                 status = Status.Idle;
             }
         }
