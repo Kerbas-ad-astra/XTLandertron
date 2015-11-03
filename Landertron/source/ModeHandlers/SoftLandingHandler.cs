@@ -53,18 +53,6 @@ namespace Landertron
                 return false;
         }
 
-        private Vector3d calculateCombinedThrust(List<Landertron> landertrons)
-        {
-            Vector3d result = Vector3d.zero;
-
-            foreach (var landertron in landertrons)
-            {
-                result += landertron.engineThrust;
-            }
-
-            return result;
-        }
-
         private double getMinBurnTime(List<Landertron> armedLandertrons)
         {
             double minBurnTime = double.PositiveInfinity;

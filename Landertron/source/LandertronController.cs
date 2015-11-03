@@ -35,6 +35,8 @@ namespace Landertron
         public void FixedUpdate()
         {
             SoftLandingHandler softLandingHandler = new SoftLandingHandler(vessel);
+            ShortLandingHandler shortLandingHandler = new ShortLandingHandler(vessel);
+            StayPutHandler stayPutHandler = new StayPutHandler(vessel);
 
             foreach (var landertron in vessel.FindPartModulesImplementing<Landertron>())
             {
@@ -43,10 +45,18 @@ namespace Landertron
                     case Landertron.Mode.SoftLanding:
                         softLandingHandler.addLandertron(landertron);
                         break;
+                    case Landertron.Mode.ShortLanding:
+                        shortLandingHandler.addLandertron(landertron);
+                        break;
+                    case Landertron.Mode.StayPut:
+                        stayPutHandler.addLandertron(landertron);
+                        break;
                 }
             }
 
             softLandingHandler.execute();
+            shortLandingHandler.execute();
+            stayPutHandler.execute();
         }
     }
 }
