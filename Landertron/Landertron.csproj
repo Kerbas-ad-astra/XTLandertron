@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="source\Landertron.cs" />
     <Compile Include="source\LandertronController.cs" />
+    <Compile Include="source\Logger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="dependencies\Assembly-CSharp.dll" />

@@ -127,6 +127,7 @@ namespace Landertron
         PartResource solidFuel;
         AnimationState[] animStates;
         bool animDeployed = false;
+        Logger log = new Logger("[Landertron] ");
 
         [KSPEvent(guiName = "Mode: ", guiActiveEditor = true)]
         public void nextMode()
@@ -217,13 +218,15 @@ namespace Landertron
 
         public override void OnStart(PartModule.StartState state)
         {
+            log.prefix = "[Landertron:" + part.flightID + "] ";
+
             engine = part.Modules["ModuleEngines"] as ModuleEngines;
             if (engine == null)
                 engine = part.Modules["ModuleEnginesFX"] as ModuleEngines;
             if (engine == null)
                 engine = part.Modules["ModuleEnginesRF"] as ModuleEngines;
             if (engine == null)
-                error("No engine found! Will crash!");
+                log.error("No engine found! Will crash!");
             engine.manuallyOverridden = true;
             solidFuel = part.Resources["SolidFuel"];
             animStates = setUpAnimation(animationName, part);
@@ -268,7 +271,7 @@ namespace Landertron
 
         internal void fire()
         {
-            debug("Firing engine");
+            log.debug("Firing engine");
             engine.Activate();
             status = Status.Firing;
         }
@@ -290,7 +293,7 @@ namespace Landertron
 
         private void ventFuel()
         {
-            debug("Venting fuel: " + solidFuel.amount);
+            log.debug("Venting fuel: " + solidFuel.amount);
             solidFuel.amount = 0;
             status = Status.Empty;
         }
@@ -304,7 +307,7 @@ namespace Landertron
         private void setStatus(Status value)
         {
             _status = value;
-            info("Status set to " + _status.ToString());
+            log.info("Status set to " + _status.ToString());
             switch (_status)
             {
                 case Status.Idle:
@@ -423,23 +426,5 @@ namespace Landertron
                 }
             }
         }
-
-        private void debug(string message)
-        {
-            #if DEBUG
-            Debug.Log("[Landertron] " + message);
-            #endif
-        }
-
-        private void info(string message)
-        {
-            Debug.Log("[Landertron] " + message);
-        }
-
-        private void error(string message)
-        {
-            Debug.LogError("[Landertron] " + message);
-        }
     }
-
 }

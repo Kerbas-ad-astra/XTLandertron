@@ -24,14 +24,12 @@ namespace Landertron
     public class LandertronController : VesselModule
     {
         Vessel vessel;
-
-        public LandertronController()
-        {
-        }
+        Logger log;
 
         public void Start()
         {
             vessel = GetComponent<Vessel>();
+            log = new Logger("[LandertronController:" + vessel.id + "] ");
         }
 
         public void FixedUpdate()
@@ -48,13 +46,13 @@ namespace Landertron
 
             if (firingLandertrons.Count > 0 && shouldShutdownFiringLandertrons(vessel, firingLandertrons))
             {
-                info("Shutting down Landertrons");
+                log.info("Shutting down Landertrons");
                 foreach (var landertron in firingLandertrons)
                     landertron.shutdown();
             }
             else if (armedLandertrons.Count > 0 && shouldFireArmedLandertrons(vessel, armedLandertrons))
             {
-                info("Firing Landertrons");
+                log.info("Firing Landertrons");
                 foreach (var landertron in armedLandertrons)
                     landertron.fire();
             }
@@ -74,7 +72,7 @@ namespace Landertron
 
             double distanceToGround = calculateDistanceToGround(vessel, -thrustDirection);
             distanceToGround += projectedSpeed * TimeWarp.fixedDeltaTime;
-            debug("Predicted distance to ground: " + distanceToGround);
+            log.debug("Predicted distance to ground: " + distanceToGround);
             if (distanceToGround < 0) // already on the ground
                 return false;
 
@@ -85,7 +83,7 @@ namespace Landertron
                 timeToStop = burnTime;
 
             double distanceToStop = Math.Abs(projectedSpeed * timeToStop + finalAcc * timeToStop * timeToStop / 2);
-            debug("Distance to stop: " + distanceToStop);
+            log.debug("Distance to stop: " + distanceToStop);
 
             return distanceToStop > distanceToGround;
         }
@@ -95,7 +93,7 @@ namespace Landertron
             Vector3d thrustDirection = calculateCombinedThrust(firingLandertrons).normalized;
             Vector3d predictedVelocity = vessel.srf_velocity + vessel.acceleration * TimeWarp.fixedDeltaTime;
             double predictedSpeed = Vector3d.Dot(predictedVelocity, thrustDirection);
-            debug("Predicted speed = " + predictedSpeed);
+            log.debug("Predicted speed = " + predictedSpeed);
             if (predictedSpeed >= 0)
                 return true;
             else
@@ -141,18 +139,6 @@ namespace Landertron
             }
 
             return hit.distance - maxExtent;
-        }
-
-        private void debug(string message)
-        {
-            #if DEBUG
-            Debug.Log("[LandertronController] " + message);
-            #endif
-        }
-
-        private void info(string message)
-        {
-            Debug.Log("[LandertronController] " + message);
         }
     }
 }
