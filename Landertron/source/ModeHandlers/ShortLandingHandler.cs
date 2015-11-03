@@ -38,10 +38,7 @@ namespace Landertron
             Vector3d predictedVelocity = vessel.srf_velocity + vessel.acceleration * TimeWarp.fixedDeltaTime;
             double predictedSpeed = Vector3d.Dot(predictedVelocity, thrustDirection);
             log.debug("Predicted speed = " + predictedSpeed);
-            if (predictedSpeed >= 0)
-                return true;
-            else
-                return false;
+            return predictedSpeed >= 0;
         }
     }
 }

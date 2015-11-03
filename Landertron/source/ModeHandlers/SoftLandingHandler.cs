@@ -41,9 +41,14 @@ namespace Landertron
                 return false;
 
             double distanceToGround = calculateDistanceToGround(vessel, -thrustDirection);
+            // Landertrons will start slowing the vessel down only on the next FixedUpdate,
+            // so we check how far off the ground it will be then.
             distanceToGround += projectedSpeed * TimeWarp.fixedDeltaTime;
-            log.debug("Predicted distance to ground: " + distanceToGround);
-            if (distanceToGround < 0) // already on the ground
+            // Actually, let's look two frames ahead, if it will be too late (vessel stops under ground)
+            // we trigger Landertrons to start slowing us down one frame ahead.
+            double nextFrameDistanceToGround = distanceToGround + projectedSpeed * TimeWarp.fixedDeltaTime;
+            log.debug("Distance to ground: " + distanceToGround + ", next frame: " + nextFrameDistanceToGround);
+            if (distanceToGround <= 0) // already on the ground
                 return false;
 
             double finalAcc = Vector3d.Dot(vessel.acceleration, thrustDirection) + combinedThrust.magnitude / vessel.GetTotalMass();
@@ -55,19 +60,23 @@ namespace Landertron
             double distanceToStop = Math.Abs(projectedSpeed * timeToStop + finalAcc * timeToStop * timeToStop / 2);
             log.debug("Distance to stop: " + distanceToStop);
 
-            return distanceToStop > distanceToGround;
+            return distanceToStop > nextFrameDistanceToGround;
         }
 
         protected override bool shouldShutdownFiringLandertrons()
         {
             Vector3d thrustDirection = calculateCombinedThrust(firingLandertrons).normalized;
+            // just for debugging
+            double distanceToGround = calculateDistanceToGround(vessel, -thrustDirection);
+            log.debug("Distance to ground: " + distanceToGround);
+            // Similar to above, Landertrons will stop accellerating the vessel on next FixedUpdate,
+            // so we check if the speed on next frame will be positive.
+            // Next step in precision would be to check if speed on next frame is negative, but closer
+            // to 0 than two frames ahead, but it doesn't matter as much here as it does when igniting.
             Vector3d predictedVelocity = vessel.srf_velocity + vessel.acceleration * TimeWarp.fixedDeltaTime;
             double predictedSpeed = Vector3d.Dot(predictedVelocity, thrustDirection);
             log.debug("Predicted speed = " + predictedSpeed);
-            if (predictedSpeed >= 0)
-                return true;
-            else
-                return false;
+            return predictedSpeed >= 0;
         }
 
         private double getMinBurnTime(List<Landertron> armedLandertrons)
