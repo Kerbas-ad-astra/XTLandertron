@@ -118,13 +118,13 @@ namespace Landertron
             get
             {
                 double fuelFlow = Mathf.Lerp(engine.minFuelFlow, engine.maxFuelFlow, engine.thrustPercentage / 100);
-                double fuelMass = solidFuel.amount * solidFuel.info.density;
+                double fuelMass = propellantResource.amount * propellantResource.info.density;
                 return fuelMass / fuelFlow;
             }
         }
 
         ModuleEngines engine;
-        PartResource solidFuel;
+        PartResource propellantResource;
         AnimationState[] animStates;
         bool animDeployed = false;
         Logger log = new Logger("[Landertron] ");
@@ -217,7 +217,9 @@ namespace Landertron
             if (engine == null)
                 log.error("No engine found! Will crash!");
             engine.manuallyOverridden = true;
-            solidFuel = part.Resources["SolidFuel"];
+            if (engine.propellants.Count > 1)
+                log.error("Engine runs on multiple propellants! Will not work correctly!");
+            propellantResource = part.Resources.Get(engine.propellants[0].id);
             animStates = setUpAnimation(animationName, part);
         }
 
@@ -241,7 +243,7 @@ namespace Landertron
         {
             if (status != Status.Empty)
             {
-                if (solidFuel.amount == 0)
+                if (propellantResource.amount == 0)
                 {
                     shutdown();
                     status = Status.Empty;
@@ -282,8 +284,8 @@ namespace Landertron
 
         private void ventFuel()
         {
-            log.debug("Venting fuel: " + solidFuel.amount);
-            solidFuel.amount = 0;
+            log.debug("Venting fuel: " + propellantResource.amount);
+            propellantResource.amount = 0;
             status = Status.Empty;
         }
 
@@ -344,10 +346,10 @@ namespace Landertron
             for (int i = 0; i < part.children.Count; )
             {
                 Part p = part.children[i];
-                if (p.Resources.Contains("SolidFuel") && solidFuel.amount < solidFuel.maxAmount)
+                if (p.Resources.Contains(propellantResource.info.id) && propellantResource.amount < propellantResource.maxAmount)
                 {
-                    PartResource sfp = p.Resources["SolidFuel"];
-                    solidFuel.amount = Math.Min(solidFuel.amount + sfp.amount, solidFuel.maxAmount);
+                    PartResource additionalPropellant = p.Resources.Get(propellantResource.info.id);
+                    propellantResource.amount = Math.Min(propellantResource.amount + additionalPropellant.amount, propellantResource.maxAmount);
                     p.Die();
                     justrefueled = true;
                 }
