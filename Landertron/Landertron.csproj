@@ -50,6 +50,8 @@
     <Compile Include="source\Landertron.cs" />
     <Compile Include="source\LandertronController.cs" />
     <Compile Include="source\Logger.cs" />
+    <Compile Include="source\ModeHandlers\ModeHandlerBase.cs" />
+    <Compile Include="source\ModeHandlers\SoftLandingHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="dependencies\Assembly-CSharp.dll" />
