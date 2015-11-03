@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dependencies\Assembly-CSharp.dll" />
+    <Content Include="dependencies\Assembly-CSharp.xml" />
     <Content Include="dependencies\UnityEngine.dll" />
+    <Content Include="dependencies\UnityEngine.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
