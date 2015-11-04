@@ -205,7 +205,6 @@ namespace Landertron
                 engine = part.Modules["ModuleEnginesRF"] as ModuleEngines;
             if (engine == null)
                 log.error("No engine found! Will crash!");
-            engine.manuallyOverridden = true;
 
             if (engine.propellants.Count > 1)
                 log.error("Engine runs on multiple propellants! Will not work correctly!");
