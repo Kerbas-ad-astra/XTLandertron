@@ -176,7 +176,18 @@ namespace Landertron
 
         public override void OnAwake()
         {
-            setMode(Mode.SoftLanding);
+            switch (EditorDriver.editorFacility)
+            {
+                case EditorFacility.SPH:
+                    setMode(Mode.ShortLanding);
+                    break;
+                case EditorFacility.VAB:
+                    setMode(Mode.SoftLanding);
+                    break;
+                default:
+                    setMode(Mode.SoftLanding);
+                    break;
+            }
             setStatus(Status.Idle);
         }
 
