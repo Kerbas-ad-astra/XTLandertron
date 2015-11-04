@@ -174,17 +174,6 @@ namespace Landertron
             disarm();
         }
 
-        [KSPEvent(guiName = "Decouple", guiActive = true, guiActiveUnfocused = true, externalToEVAOnly = true, unfocusedRange = 3.0f)]
-        public void decouple()
-        {
-            part.decouple(2000);
-        }
-        [KSPAction("Decouple")]
-        public void decoupleAction(KSPActionParam param)
-        {
-            decouple();
-        }
-
         public override void OnAwake()
         {
             setMode(Mode.SoftLanding);
@@ -217,9 +206,11 @@ namespace Landertron
             if (engine == null)
                 log.error("No engine found! Will crash!");
             engine.manuallyOverridden = true;
+
             if (engine.propellants.Count > 1)
                 log.error("Engine runs on multiple propellants! Will not work correctly!");
             propellantResource = part.Resources.Get(engine.propellants[0].id);
+
             animStates = setUpAnimation(animationName, part);
         }
 
