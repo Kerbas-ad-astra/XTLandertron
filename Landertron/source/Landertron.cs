@@ -221,6 +221,10 @@ namespace Landertron
                 log.error("Engine runs on multiple propellants! Will not work correctly!");
             propellantResource = part.Resources.Get(engine.propellants[0].id);
 
+            // To allow refueling with KIS
+            if (HighLogic.LoadedSceneIsFlight)
+                part.attachRules.allowSrfAttach = true;
+
             animStates = setUpAnimation(animationName, part);
         }
 
