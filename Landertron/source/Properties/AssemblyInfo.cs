@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 [assembly: AssemblyVersion("0.10.0")]
-[assembly: AssemblyFileVersion("0.10.0.2")]
+[assembly: AssemblyFileVersion("0.10.0.3")]
 [assembly: AssemblyInformationalVersion("0.10.0")]
 
 [assembly: KSPAssembly("Landertron", 0, 10)]
