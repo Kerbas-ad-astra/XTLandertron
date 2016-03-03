@@ -94,6 +94,23 @@ namespace Landertron
             if (!Physics.Raycast(position, direction, out hit, float.PositiveInfinity, 1 << 15))
                 return double.PositiveInfinity;
 
+			double distanceToTerrain = hit.distance;
+
+			double distanceToWater = double.PositiveInfinity;
+
+			if (vessel.mainBody.ocean) {  // Do a little trig to see if/where our current trajectory will intersect the sea-level sphere (which the raycast doesn't detect).
+				Vector3d down = (vessel.mainBody.position - vessel.CoM).normalized;
+				double cosTheta = Vector3d.Dot (down, direction);
+				double r = vessel.mainBody.Radius;
+				double a = r + vessel.altitude;
+				double discriminant = Math.Pow (a, 2) * Math.Pow (cosTheta, 2) - (Math.Pow (a, 2) - Math.Pow (r, 2)); //It's divided by a factor of four from the usual discriminant, because the discriminant will just get sqrted and divided by 2 anyway.
+				if (discriminant >= 0) {
+					distanceToWater = a * cosTheta - Math.Sqrt (discriminant);
+				}
+			}
+
+			double distanceToImpact = Math.Min (distanceToTerrain, distanceToWater);
+
             Vector3d fakeInfinity = position + 1000 * direction;
             double maxExtent = 0;
             foreach (var part in vessel.parts)
@@ -105,7 +122,7 @@ namespace Landertron
                 }
             }
 
-            return hit.distance - maxExtent;
+			return distanceToImpact - maxExtent;
         }
     }
 }
