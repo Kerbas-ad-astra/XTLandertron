@@ -68,14 +68,16 @@ namespace Landertron
         }
 
         // KSPField doesn't like enums or properties so this will be persisted in OnLoad/OnSave.
-        Status _status = Status.Idle;
-        public Status status
+        //Status _status = Status.Idle;
+        public Status _status = Status.Idle;
+        virtual public Status status
         {
             get
             {
                 return _status;
             }
-            private set
+            //private set
+            set
             {
                 if (_status != value)
                     setStatus(value);
@@ -98,7 +100,7 @@ namespace Landertron
             }
         }
 
-        public Vector3d engineThrust
+        virtual public Vector3d engineThrust
         {
             get
             {
@@ -113,7 +115,7 @@ namespace Landertron
             }
         }
 
-        public double engineBurnTime
+        virtual public double engineBurnTime
         {
             get
             {
@@ -260,19 +262,19 @@ namespace Landertron
                 if (part.RequestResource("ElectricCharge", electricReq) < electricReq)
                 {
                     disarm();
-                    ScreenMessages.PostScreenMessage("Landertron ouf of electric charge, disarming!", 5, ScreenMessageStyle.UPPER_CENTER);
+                    ScreenMessages.PostScreenMessage("Landertron out of electric charge, disarming!", 5, ScreenMessageStyle.UPPER_CENTER);
                 }
             }
         }
 
-        internal void fire()
+        virtual internal void fire()
         {
             log.debug("Firing engine");
             engine.Activate();
             status = Status.Firing;
         }
 
-        internal void shutdown()
+        virtual internal void shutdown()
         {
             if (engine.allowShutdown)
             {
