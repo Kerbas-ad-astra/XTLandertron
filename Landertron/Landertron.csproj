@@ -52,6 +52,7 @@
     <Compile Include="source\ModeHandlers\ShortLandingHandler.cs" />
     <Compile Include="source\ModeHandlers\SoftLandingHandler.cs" />
     <Compile Include="source\ModeHandlers\StayPutHandler.cs" />
+    <Compile Include="source\LandertronBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="dependencies\Assembly-CSharp.dll" />
