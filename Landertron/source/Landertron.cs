@@ -60,7 +60,7 @@ namespace Landertron
             {
                 return _mode;
             }
-            private set
+            protected set
             {
                 if (_mode != value)
                     setMode(value);
@@ -76,8 +76,7 @@ namespace Landertron
             {
                 return _status;
             }
-            //private set
-            set
+            protected set
             {
                 if (_status != value)
                     setStatus(value);
@@ -124,6 +123,14 @@ namespace Landertron
                 return fuelMass / fuelFlow;
             }
         }
+
+        //virtual public double engineFuelFlow
+        //{
+        //    get
+        //    {
+        //        return Mathf.Lerp(engine.minFuelFlow, engine.maxFuelFlow, engine.thrustPercentage / 100);
+        //    }
+        //}
 
         ModuleEngines engine;
         PartResource propellantResource;
@@ -289,20 +296,20 @@ namespace Landertron
             }
         }
 
-        private void ventFuel()
+        protected void ventFuel()
         {
             log.debug("Venting fuel: " + propellantResource.amount);
             propellantResource.amount = 0;
             status = Status.Empty;
         }
 
-        private void setMode(Mode value)
+        protected void setMode(Mode value)
         {
             _mode = value;
             Events["nextMode"].guiName = "Mode: " + mode.ToString();
         }
 
-        private void setStatus(Status value)
+        protected void setStatus(Status value)
         {
             _status = value;
             log.info("Status set to " + _status.ToString());
@@ -347,7 +354,7 @@ namespace Landertron
             }
         }
 
-        private void refuel()
+        protected void refuel()
         {
             bool justrefueled = false;
             for (int i = 0; i < part.children.Count; )
@@ -373,7 +380,7 @@ namespace Landertron
             }
         }
 
-        private void forAllSym()
+        protected void forAllSym()
         {
             foreach (Part p in part.symmetryCounterparts)
             {
@@ -382,7 +389,7 @@ namespace Landertron
             }
         }
 
-        private static AnimationState[] setUpAnimation(string animationName, Part part)  //Thanks Majiir!
+        protected static AnimationState[] setUpAnimation(string animationName, Part part)  //Thanks Majiir!
         {
             var states = new List<AnimationState>();
             foreach (var animation in part.FindModelAnimators(animationName))
@@ -397,7 +404,7 @@ namespace Landertron
             return states.ToArray();
         }
 
-        private void updateAnimation()
+        protected void updateAnimation()
         {
             foreach (AnimationState anim in animStates)
             {

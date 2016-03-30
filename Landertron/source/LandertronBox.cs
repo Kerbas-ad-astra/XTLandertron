@@ -33,7 +33,7 @@ namespace Landertron
                         boxes += 1;
                 }
                 sumVector = sumVector / boxes;
-                log.debug ("LandertronBox: "+sumVector.magnitude.ToString()+":"+boxes.ToString());
+                log.debug ("LandertronBox: "+sumVector.magnitude.ToString()+" : "+boxes.ToString());
                 return sumVector;
             }
         }
@@ -42,19 +42,43 @@ namespace Landertron
         {
             get
             {
-                double result = 0;
-                //foreach (var engine in engines) {
-                //    double fuelFlow = Mathf.Lerp (engine.minFuelFlow, engine.maxFuelFlow, engine.thrustPercentage / 100);
-                //    double fuelMass = propellantResource.amount * propellantResource.info.density;
-                //    result += fuelMass / fuelFlow;
-                //}
+                double result = double.PositiveInfinity;
+                foreach (var engine in engines) {
+                    double fuelFlow = Mathf.Lerp (engine.minFuelFlow, engine.maxFuelFlow, engine.thrustPercentage / 100);
+                    foreach (var propellant in engine.propellants) {
+                        if (propellant.ignoreForIsp)
+                            continue;
+                        double propFlow = fuelFlow * propellant.ratio / engine.ratioSum;
+                        if (propellant.connectedResources.Count > 0) {
+                            double propDens = propellant.connectedResources.ToArray () [0].info.density;
+                            if (propDens <= 0)
+                                continue;
+                            double fuelMass = propellant.currentAmount * propDens;
+                            result = Math.Min(result,fuelMass/propFlow);
+                        } else {
+                            return 0;
+                        }
+                    }
+                }
+                // Since the above seems to be giving too small a number, it's up to the user to ensure sufficient propellant
                 result = double.PositiveInfinity;
                 return result;
             }
         }
 
+        //override public double engineFuelFlow
+        //{
+        //    get
+        //    {
+        //        double result = 0;
+        //        foreach (var engine in engines) {
+        //            result += Mathf.Lerp (engine.minFuelFlow, engine.maxFuelFlow, engine.thrustPercentage / 100);
+        //        }
+        //        return result;
+        //    }
+        //}
+
         List<ModuleEngines> engines = new List<ModuleEngines>();
-        //List<List<ModuleResource>> propellantResource = new List<List<ModuleResource>>();
         Logger log = new Logger("[Landertron] ");
 
         public override void OnStart(PartModule.StartState state)
@@ -96,8 +120,6 @@ namespace Landertron
 
             //if (engines.Count == 0)
             //    log.error("No engine found! Will crash!");
-            
-            //propellantResource = part.Resources.Get(engine.propellants[0].id);
         }
 
         public override void OnFixedUpdate()
@@ -105,6 +127,8 @@ namespace Landertron
             if (!(status == Status.Idle)) {
                 checkEngines ();
                 if (engines.Count <= 0) {
+                    if (status == Status.Armed)
+                        ScreenMessages.PostScreenMessage ("Landertron could not find an active engine, disarming!", 5, ScreenMessageStyle.UPPER_CENTER);
                     status = Status.Empty;
                 } else if (status == Status.Empty) {
                     status = Status.Idle;
@@ -120,13 +144,17 @@ namespace Landertron
                     ScreenMessages.PostScreenMessage("Landertron out of electric charge, disarming!", 5, ScreenMessageStyle.UPPER_CENTER);
                 }
             }
-            if (status == Status.Firing) {
+            // If the StayPut mode has been firing for more than 3 seconds, stop firing.
+            else if ((mode == Mode.StayPut) && (status == Status.Firing) && (Planetarium.GetUniversalTime () > fireTime + 3))
+                shutdown ();
+            else if (status == Status.Firing) {
                 throttle = 1.0f;
                 vessel.OnFlyByWire += setThrottle;
             }
         }
-
+        
         float throttle = 0.0f;
+        double fireTime = 0.0f;
 
         override internal void fire()
         {
@@ -135,9 +163,8 @@ namespace Landertron
             status = Status.Firing;
             throttle = 1.0f;
             vessel.OnFlyByWire += setThrottle;
-            //foreach (var engine in engines) {
-                //engine.requestedThrottle = 100;
-            //}
+            if (mode == Mode.StayPut)
+                fireTime = Planetarium.GetUniversalTime();
         }
 
         void setThrottle(FlightCtrlState s){
@@ -156,8 +183,9 @@ namespace Landertron
                     engine.Shutdown ();
                 }
             }
-            if (!vessel.LandedOrSplashed) {
-                if (Math.Min (vessel.terrainAltitude, vessel.altitude) * vessel.mainBody.GeeASL * 9.81 * 2 > 2.64) {
+            double alt = new SoftLandingHandler (vessel).calculateDistanceToGround (vessel, this.engineThrust.normalized);
+            if ((mode == Mode.SoftLanding) && (!vessel.LandedOrSplashed)) {
+                if (alt * vessel.mainBody.GeeASL * 9.81 * 2 > Math.Sqrt(8)) {
                     status = Status.Armed;
                 } else {
                     status = Status.Idle;
