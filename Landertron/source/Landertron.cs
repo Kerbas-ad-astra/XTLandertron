@@ -60,7 +60,7 @@ namespace Landertron
             {
                 return _mode;
             }
-            private set
+            protected set
             {
                 if (_mode != value)
                     setMode(value);
@@ -68,14 +68,15 @@ namespace Landertron
         }
 
         // KSPField doesn't like enums or properties so this will be persisted in OnLoad/OnSave.
-        Status _status = Status.Idle;
-        public Status status
+        //Status _status = Status.Idle;
+        public Status _status = Status.Idle;
+        virtual public Status status
         {
             get
             {
                 return _status;
             }
-            private set
+            protected set
             {
                 if (_status != value)
                     setStatus(value);
@@ -98,7 +99,7 @@ namespace Landertron
             }
         }
 
-        public Vector3d engineThrust
+        virtual public Vector3d engineThrust
         {
             get
             {
@@ -113,7 +114,7 @@ namespace Landertron
             }
         }
 
-        public double engineBurnTime
+        virtual public double engineBurnTime
         {
             get
             {
@@ -122,6 +123,14 @@ namespace Landertron
                 return fuelMass / fuelFlow;
             }
         }
+
+        //virtual public double engineFuelFlow
+        //{
+        //    get
+        //    {
+        //        return Mathf.Lerp(engine.minFuelFlow, engine.maxFuelFlow, engine.thrustPercentage / 100);
+        //    }
+        //}
 
         ModuleEngines engine;
         PartResource propellantResource;
@@ -260,19 +269,19 @@ namespace Landertron
                 if (part.RequestResource("ElectricCharge", electricReq) < electricReq)
                 {
                     disarm();
-                    ScreenMessages.PostScreenMessage("Landertron ouf of electric charge, disarming!", 5, ScreenMessageStyle.UPPER_CENTER);
+                    ScreenMessages.PostScreenMessage("Landertron out of electric charge, disarming!", 5, ScreenMessageStyle.UPPER_CENTER);
                 }
             }
         }
 
-        internal void fire()
+        virtual internal void fire()
         {
             log.debug("Firing engine");
             engine.Activate();
             status = Status.Firing;
         }
 
-        internal void shutdown()
+        virtual internal void shutdown()
         {
             if (engine.allowShutdown)
             {
@@ -287,20 +296,20 @@ namespace Landertron
             }
         }
 
-        private void ventFuel()
+        protected void ventFuel()
         {
             log.debug("Venting fuel: " + propellantResource.amount);
             propellantResource.amount = 0;
             status = Status.Empty;
         }
 
-        private void setMode(Mode value)
+        protected void setMode(Mode value)
         {
             _mode = value;
             Events["nextMode"].guiName = "Mode: " + mode.ToString();
         }
 
-        private void setStatus(Status value)
+        protected void setStatus(Status value)
         {
             _status = value;
             log.info("Status set to " + _status.ToString());
@@ -345,7 +354,7 @@ namespace Landertron
             }
         }
 
-        private void refuel()
+        protected void refuel()
         {
             bool justrefueled = false;
             for (int i = 0; i < part.children.Count; )
@@ -371,7 +380,7 @@ namespace Landertron
             }
         }
 
-        private void forAllSym()
+        protected void forAllSym()
         {
             foreach (Part p in part.symmetryCounterparts)
             {
@@ -380,7 +389,7 @@ namespace Landertron
             }
         }
 
-        private static AnimationState[] setUpAnimation(string animationName, Part part)  //Thanks Majiir!
+        protected static AnimationState[] setUpAnimation(string animationName, Part part)  //Thanks Majiir!
         {
             var states = new List<AnimationState>();
             foreach (var animation in part.FindModelAnimators(animationName))
@@ -395,7 +404,7 @@ namespace Landertron
             return states.ToArray();
         }
 
-        private void updateAnimation()
+        protected void updateAnimation()
         {
             foreach (AnimationState anim in animStates)
             {

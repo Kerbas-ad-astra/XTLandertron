@@ -50,7 +50,7 @@ namespace Landertron
             log.debug("Distance to ground: " + distanceToGround + ", next frame: " + nextFrameDistanceToGround);
             if (distanceToGround <= 0) // already on the ground
                 return false;
-
+            
             double finalAcc = Vector3d.Dot(vessel.acceleration, thrustDirection) + combinedThrust.magnitude / vessel.GetTotalMass();
             double timeToStop = -projectedSpeed / finalAcc;
             double burnTime = getMinBurnTime(armedLandertrons);
@@ -87,29 +87,29 @@ namespace Landertron
             return minBurnTime;
         }
 
-        private double calculateDistanceToGround(Vessel vessel, Vector3d direction)
+        public double calculateDistanceToGround(Vessel vessel, Vector3d direction)
         {
             Vector3d position = vessel.findWorldCenterOfMass();
             RaycastHit hit;
             if (!Physics.Raycast(position, direction, out hit, float.PositiveInfinity, 1 << 15))
                 return double.PositiveInfinity;
 
-			double distanceToTerrain = hit.distance;
+            double distanceToTerrain = hit.distance;
 
-			double distanceToWater = double.PositiveInfinity;
+            double distanceToWater = double.PositiveInfinity;
 
-			if (vessel.mainBody.ocean) {  // Do a little trig to see if/where our current trajectory will intersect the sea-level sphere (which the raycast doesn't detect).
-				Vector3d down = (vessel.mainBody.position - vessel.CoM).normalized;
-				double cosTheta = Vector3d.Dot (down, direction);
-				double r = vessel.mainBody.Radius;
-				double a = r + vessel.altitude;
-				double discriminant = Math.Pow (a, 2) * Math.Pow (cosTheta, 2) - (Math.Pow (a, 2) - Math.Pow (r, 2)); //It's divided by a factor of four from the usual discriminant, because the discriminant will just get sqrted and divided by 2 anyway.
-				if (discriminant >= 0) {
-					distanceToWater = a * cosTheta - Math.Sqrt (discriminant);
-				}
-			}
+            if (vessel.mainBody.ocean) {  // Do a little trig to see if/where our current trajectory will intersect the sea-level sphere (which the raycast doesn't detect).
+                Vector3d down = (vessel.mainBody.position - vessel.CoM).normalized;
+                double cosTheta = Vector3d.Dot (down, direction);
+                double r = vessel.mainBody.Radius;
+                double a = r + vessel.altitude;
+                double discriminant = Math.Pow (a, 2) * Math.Pow (cosTheta, 2) - (Math.Pow (a, 2) - Math.Pow (r, 2)); //It's divided by a factor of four from the usual discriminant, because the discriminant will just get sqrted and divided by 2 anyway.
+                if (discriminant >= 0) {
+                    distanceToWater = a * cosTheta - Math.Sqrt (discriminant);
+                }
+            }
 
-			double distanceToImpact = Math.Min (distanceToTerrain, distanceToWater);
+            double distanceToImpact = Math.Min (distanceToTerrain, distanceToWater);
 
             Vector3d fakeInfinity = position + 1000 * direction;
             double maxExtent = 0;
@@ -122,7 +122,7 @@ namespace Landertron
                 }
             }
 
-			return distanceToImpact - maxExtent;
+            return distanceToImpact - maxExtent;
         }
     }
 }
