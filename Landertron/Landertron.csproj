@@ -36,11 +36,17 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Assembly-CSharp">
-      <HintPath>dependencies\Assembly-CSharp.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>dependencies\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files %28x86%29\Steam\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="KSPUtil">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files %28x86%29\Steam\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\KSPUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files %28x86%29\Steam\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files %28x86%29\Steam\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -53,12 +59,6 @@
     <Compile Include="source\ModeHandlers\SoftLandingHandler.cs" />
     <Compile Include="source\ModeHandlers\StayPutHandler.cs" />
     <Compile Include="source\LandertronBox.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="dependencies\Assembly-CSharp.dll" />
-    <Content Include="dependencies\Assembly-CSharp.xml" />
-    <Content Include="dependencies\UnityEngine.dll" />
-    <Content Include="dependencies\UnityEngine.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
