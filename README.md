@@ -67,7 +67,8 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 * 2016 Mar 25 (v0.12): Ocean landings
 	* Landertrons will now soft-land over oceans as well as on land.
 * 2016 Apr XX (v0.13): Vnity 5
-	* Incorporated "LandertronBox" module from Booots.  A part with this module will control a craft's engines to achieve landertron functionality.  There's no part that implements this module yet, but I'll get to it eventually.
+	* Incorporated "LandertronBox" module from Booots.  A part with this module will control a craft's engines to achieve landertron functionality (at least, it will try -- this feature is a bit finicky).
+		* Added the "XT-LB Landertron Box" part (welded from the stock Small Inline Reaction Wheel and Atmospheric Fluid Spectro-Variometer models, so be careful when pruning).
 	* Compiled against 1.1 libraries.
 
 ##Roadmap
