@@ -4,11 +4,21 @@ Automatic retro-rockets for landing.
 
 ##Features
 
+Landertrons are small solid rocket motors which can be mounted on a craft and set to automatically fire in one of three modes:
 
+* **SoftLanding**, firing to *brake* a rocket's descent and prevent the rocket from *breaking*.  Note that the engines will cut out when the craft is slightly above the ground, so be ready for a bit of a drop!
+* **ShortLanding**, firing to arrest a spaceplane's momentum on landing.
+* **StayPut**, firing downward to prevent a vehicle from bouncing or tipping (or at least try).
+
+A landertron will only fire if it can make a positive contribution to its desired mode, and will cut out automatically, but it's up to you to put them in the proper quantity and orientation to get the job done.
+
+If KAS and KIS are installed, then the landertrons can be refueled using the included hex-cans of solid fuel.  Just attach them to spent landertrons, and you will be ready to fly again in no time.
+
+There is also a "Landertron Box", which will attempt to control a spacecraft's engines as if they were landertrons.  Warranty void if used for critical mission phases!
 
 ##Recommended addons
 
-* [**Home Grown Rockets**](http://forum.kerbalspaceprogram.com/index.php?/topic/55521-102hgr-1875m-partsv130-released/) (plus [HGR Community Fixes](http://forum.kerbalspaceprogram.com/index.php?/topic/131556-104-5-hgr-community-fixes-home-grown-fixes-for-home-grown-rockets-v12-2016-mar-01/)) have retro-rockets in their "SoyJuice" descent modules.  With Landertron, they will automatically fire to soften their landings, just like the real Soyuz pods.
+* [**Home Grown Rockets**](http://forum.kerbalspaceprogram.com/index.php?/topic/55521-102hgr-1875m-partsv130-released/) (plus [HGR Community Fixes](http://forum.kerbalspaceprogram.com/index.php?/topic/131556-104-5-hgr-community-fixes-home-grown-fixes-for-home-grown-rockets-v12-2016-mar-01/)) have retro-rockets in their "SoyJuice" descent modules.  With Landertron, they will automatically fire to soften their landings, just like the real Soyuz pods.  (Note that they are not capable of substituting for parachutes!)
 
 ##Download and install
 
@@ -66,14 +76,14 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 		* Switch to use 'stagingEnabled' to prevent engine and decoupler from activating upon staging.
 * 2016 Mar 25 (v0.12): Ocean landings
 	* Landertrons will now soft-land over oceans as well as on land.
-* 2016 Apr XX (v0.13): Vnity 5
+* 2016 Apr 24 (v0.13): Vnity 5
 	* Incorporated "LandertronBox" module from Booots.  A part with this module will control a craft's engines to achieve landertron functionality (at least, it will try -- this feature is a bit finicky).
 		* Added the "XT-LB Landertron Box" part (welded from the stock Small Inline Reaction Wheel and Atmospheric Fluid Spectro-Variometer models, so be careful when pruning).
 	* Compiled against 1.1 libraries.
 
 ##Roadmap
 
-Make and include a LandertronBox part.  Maybe weld something out of the stock "Atmospheric Fluid Spectro-Variometer" and a probe core?
+Just keeping it ticking along.  Please let us know in the thread or on the [**issue tracker**](https://github.com/Kerbas-ad-astra/XTLandertron/issues) if you have any suggestions.
 
 ##Credits / License
 
