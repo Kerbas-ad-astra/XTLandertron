@@ -16,8 +16,9 @@ namespace Landertron
                 Vector3d sumVector = Vector3d.zero;
                 foreach (var engine in engines) {
                     Vector3d vector = Vector3d.zero;
-                    foreach (var transform in engine.thrustTransforms)
-                        vector -= transform.forward;
+					for (int i = 0; i < engine.thrustTransforms.Count; i++) {
+						vector -= engine.thrustTransforms [i].forward * engine.thrustTransformMultipliers [i];
+					}
                     vector.Normalize ();
                     double isp = engine.atmosphereCurve.Evaluate ((float)engine.part.staticPressureAtm);
                     double fuelFlow = Mathf.Lerp (engine.minFuelFlow, engine.maxFuelFlow, engine.thrustPercentage / 100);
