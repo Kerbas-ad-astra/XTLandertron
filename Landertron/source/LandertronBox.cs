@@ -50,8 +50,8 @@ namespace Landertron
                         if (propellant.ignoreForIsp)
                             continue;
                         double propFlow = fuelFlow * propellant.ratio / engine.ratioSum;
-                        if (propellant.connectedResources.Count > 0) {
-                            double propDens = propellant.connectedResources.ToArray () [0].info.density;
+						if (propellant.totalResourceAvailable > 0) {
+							double propDens = PartResourceLibrary.Instance.GetDefinition(propellant.id).density;
                             if (propDens <= 0)
                                 continue;
                             double fuelMass = propellant.currentAmount * propDens;

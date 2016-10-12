@@ -23,12 +23,12 @@ namespace Landertron
 {
     public class LandertronController : VesselModule
     {
-        Vessel vessel;
+        //Vessel vessel;
         Logger log;
 
         public void Start()
         {
-            vessel = GetComponent<Vessel>();
+            //vessel = GetComponent<Vessel>();
             log = new Logger("[LandertronController:" + vessel.id + "] ");
         }
 

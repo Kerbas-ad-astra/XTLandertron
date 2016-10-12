@@ -80,8 +80,10 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 	* Incorporated "LandertronBox" module from Booots.  A part with this module will control a craft's engines to achieve landertron functionality (at least, it will try -- this feature is a bit finicky).
 		* Added the "XT-LB Landertron Box" part (welded from the stock Small Inline Reaction Wheel and Atmospheric Fluid Spectro-Variometer models, so be careful when pruning).
 	* Compiled against 1.1 libraries.
-* 2016 May 13 (v0.14): Future proofing
+* 2016 Oct 12 (v0.14): Future Proofing.
 	* Added support for thrustTransformMultipliers.
+	* Updated for KSP 1.2.
+	* Added .version file.
 
 ##Roadmap
 

@@ -89,7 +89,7 @@ namespace Landertron
 
         public double calculateDistanceToGround(Vessel vessel, Vector3d direction)
         {
-            Vector3d position = vessel.findWorldCenterOfMass();
+			Vector3d position = vessel.CoM;
             RaycastHit hit;
             if (!Physics.Raycast(position, direction, out hit, float.PositiveInfinity, 1 << 15))
                 return double.PositiveInfinity;
