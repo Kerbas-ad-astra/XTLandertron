@@ -1,6 +1,6 @@
-# XT Landertron
+# Landertrons
 
-Automatic retro-rockets for landing.
+*Automatic retro-rockets for landing.*
 
 ##Features
 
@@ -33,7 +33,7 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 
 ##Version history and changelog
 
-* Back when dinosaurs ruled the Earth (0.08): XanderTek's last release, for 0.25.
+* 2014 Oct 10 (0.08): [XanderTek's last release](http://forum.kerbalspaceprogram.com/index.php?/topic/55798-10-xt-landertron-smart-retrorockets-for-landers-and-spaceplanes-v008-oct-10/), for 0.25.
 * 2015 Sep 06 (v0.09-beta.KAA): Restored functionality.
 	* Fixed Landertron module to work with 1.0.x atmosphere changes (new Isp calculation code based on Kerbal Engineer).
 	* Fixed Landertron Short Landing mode to be less sensitive to bouncy landings.
@@ -87,7 +87,7 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 
 ##Roadmap
 
-Just keeping it ticking along.  Please let us know in the thread or on the [**issue tracker**](https://github.com/Kerbas-ad-astra/XTLandertron/issues) if you have any suggestions.
+Just keeping it ticking along.   Might add a fancy logo and some pictures one of these days.  Please let us know in the thread or on the [**issue tracker**](https://github.com/Kerbas-ad-astra/XTLandertron/issues) if you have any suggestions.
 
 ##Credits / License
 
