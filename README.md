@@ -84,6 +84,8 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 	* Added support for thrustTransformMultipliers.
 	* Updated for KSP 1.2.
 	* Added .version file.
+* 02016 Oct 13 0340 UTC (v0.15): Crunch!
+	* Packaged the right DLL this time...
 
 ##Roadmap
 
