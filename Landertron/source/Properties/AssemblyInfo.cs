@@ -29,8 +29,8 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.14.0")]
-[assembly: AssemblyFileVersion("0.14.0.0")]
-[assembly: AssemblyInformationalVersion("0.14.0")]
+[assembly: AssemblyVersion("0.15.0")]
+[assembly: AssemblyFileVersion("0.15.0.0")]
+[assembly: AssemblyInformationalVersion("0.15.0")]
 
-[assembly: KSPAssembly("Landertron", 0, 14)]
+[assembly: KSPAssembly("Landertron", 0, 15)]
