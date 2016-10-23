@@ -2,6 +2,8 @@
 
 *Automatic retro-rockets for landing.*
 
+![Landertrons logo](https://github.com/Kerbas-ad-astra/XTLandertron/raw/master/Landertron-logo.png)
+
 ##Features
 
 Landertrons are small solid rocket motors which can be mounted on a craft and set to automatically fire in one of three modes:
@@ -86,13 +88,18 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 	* Added .version file.
 * 02016 Oct 13 0340 UTC (v0.15): Crunch!
 	* Packaged the right DLL this time...
+* 02016 Oct XX (v1.0): One Point Zero
+	* New XT-LB model, from steedcrugeon.  (The old model has been made unresearchable, and will be removed in the next release.)
 
 ##Roadmap
 
-Just keeping it ticking along.   Might add a fancy logo and some pictures one of these days.  Please let us know in the thread or on the [**issue tracker**](https://github.com/Kerbas-ad-astra/XTLandertron/issues) if you have any suggestions.
+Just keeping it ticking along.   Please let us know in the thread or on the [**issue tracker**](https://github.com/Kerbas-ad-astra/XTLandertron/issues) if you have any suggestions.
 
 ##Credits / License
 
-* Source code and DLL licensed under [**GNU GPL**](http://www.gnu.org/licenses/gpl.html) (v3 or later).  Variously by XanderTek, Kerbas_ad_astra, charfa, and Booots.
+* Source code and DLL licensed under [**GNU GPL**](http://www.gnu.org/licenses/gpl.html) (v3 or later).  Variously by XanderTek, Kerbas_ad_astra, charfa, and Booots.  If you rele
 * SolidFuel HexCan part based on Greys' [**HexCans**](http://forum.kerbalspaceprogram.com/threads/33754-0-25-HexCans-Standardized-Resource-Canisters-0-7-1-Breaking-Ground-Edition), licensed under [**CC-BY-SA**](https://creativecommons.org/licenses/by-sa/2.0/).
 * Landertron parts based on [**models by BahamutoD**](http://forum.kerbalspaceprogram.com/threads/82341-1-0-B-Dynamics-Retracting-vectoring-engines-etc-v1-2-0-%28May-6%29), licensed under [**CC-BY-SA**](https://creativecommons.org/licenses/by-sa/2.0/).
+* XT-L-KRAB model by steedcrugeon, licensed under [**CC-BY-SA**](https://creativecommons.org/licenses/by-sa/4.0/) (4.0 or later).
+
+Any redistributions must use a different name and folder (per the GPL section 7c).  All other rights (e.g. the Landertrons logo) reserved.
