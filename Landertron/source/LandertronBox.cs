@@ -186,7 +186,7 @@ namespace Landertron
             }
             double alt = new SoftLandingHandler (vessel).calculateDistanceToGround (vessel, this.engineThrust.normalized);
             if ((mode == Mode.SoftLanding) && (!vessel.LandedOrSplashed)) {
-                if (alt * vessel.mainBody.GeeASL * 9.81 * 2 > Math.Sqrt(8)) {
+				if (alt * vessel.mainBody.GeeASL * 9.81 * 2 + vessel.srf_velocity.sqrMagnitude > 9) { // Landing speed of 3 m/s.
                     status = Status.Armed;
                 } else {
                     status = Status.Idle;
