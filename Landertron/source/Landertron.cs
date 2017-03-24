@@ -1,5 +1,5 @@
 ﻿/* Copyright 2015 XanderTek (contributions by TheDog & Kerbas_ad_astra).
- * Copyright 2015 charfa
+ * Copyright 2015-2017 charfa, Kerbas_ad_astra.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
