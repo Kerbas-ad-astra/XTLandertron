@@ -35,25 +35,33 @@ namespace Landertron
 
             Vector3d combinedThrust = calculateCombinedThrust(armedLandertrons);
             Vector3d thrustDirection = combinedThrust.normalized;
+			Vector3d down = (vessel.mainBody.position - vessel.CoM).normalized;
 
-            double projectedSpeed = Vector3d.Dot(vessel.srf_velocity, thrustDirection);
+			double projectedSpeed = Vector3d.Dot(vessel.srf_velocity, thrustDirection);
             if (projectedSpeed >= 0) // already stopped
                 return false;
 
             double distanceToGround = calculateDistanceToGround(vessel, -thrustDirection);
+			double distanceToGroundVert = calculateDistanceToGround(vessel, down);
             // Landertrons will start slowing the vessel down only on the next FixedUpdate,
             // so we check how far off the ground it will be then.
             distanceToGround += projectedSpeed * TimeWarp.fixedDeltaTime;
             // Actually, let's look two frames ahead, if it will be too late (vessel stops under ground)
             // we trigger Landertrons to start slowing us down one frame ahead.
             double nextFrameDistanceToGround = distanceToGround + projectedSpeed * TimeWarp.fixedDeltaTime;
-            log.debug("Distance to ground: " + distanceToGround + ", next frame: " + nextFrameDistanceToGround);
+			log.debug("Distance to ground: " + distanceToGround + ", next frame: " + nextFrameDistanceToGround + ", vertically: " + distanceToGroundVert);
             if (distanceToGround <= 0) // already on the ground
                 return false;
             
-            double finalAcc = Vector3d.Dot(vessel.acceleration, thrustDirection) + combinedThrust.magnitude / vessel.GetTotalMass();
-            double timeToStop = -projectedSpeed / finalAcc;
+            double gravity = FlightGlobals.currentMainBody.gravParameter / Math.Pow(FlightGlobals.currentMainBody.Radius, 2.0);
+			double finalAcc = Vector3d.Dot(down, thrustDirection)*gravity + combinedThrust.magnitude / vessel.GetTotalMass();
+			double predictedSpeed = Math.Sqrt(Math.Pow(projectedSpeed, 2.0) + 2 * distanceToGroundVert * gravity);
+			log.debug("Projspeed: " + projectedSpeed + " predspeed: " + predictedSpeed);
+			double timeToStop = predictedSpeed / finalAcc;
             double burnTime = getMinBurnTime(armedLandertrons);
+
+			log.debug("Final acc: " + finalAcc + " time to stop: " + timeToStop + " burn time: " + burnTime);
+
             if (timeToStop < 0 || timeToStop > burnTime) // will never stop
                 timeToStop = burnTime;
 
