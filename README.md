@@ -8,7 +8,7 @@
 
 Landertrons are small solid rocket motors which can be mounted on a craft and set to automatically fire in one of three modes:
 
-* **SoftLanding**, firing to *brake* a rocket's descent and prevent the rocket from *breaking*.  Note that the engines will cut out when the craft is slightly above the ground, so be ready for a bit of a drop!
+* **SoftLanding**, firing to *brake* a rocket's descent and prevent the rocket from *breaking*.  Note that the engines will cut out when the craft is above the ground, so be ready for a bit of a drop!
 * **ShortLanding**, firing to arrest a spaceplane's momentum on landing.
 * **StayPut**, firing downward to prevent a vehicle from bouncing or tipping (or at least try).
 
@@ -16,7 +16,7 @@ A landertron will only fire if it can make a positive contribution to its desire
 
 If KAS and KIS are installed, then the landertrons can be refueled using the included hex-cans of solid fuel.  Just attach them to spent landertrons, and you will be ready to fly again in no time.
 
-There is also a "Landertron Box", which will attempt to control a spacecraft's engines as if they were landertrons.  Warranty void if used for critical mission phases!
+There is also an XT-L-KRAB "Landertron Box", which will attempt to control a spacecraft's engines as if they were landertrons.  Warranty void if used for critical mission phases!
 
 ##Recommended addons
 
@@ -88,8 +88,10 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 	* Added .version file.
 * 02016 Oct 13 0340 UTC (v0.15): Crunch!
 	* Packaged the right DLL this time...
-* 02016 Oct XX (v1.0): One Point Zero
-	* New XT-LB model, from steedcrugeon.  (The old model has been made unresearchable, and will be removed in the next release.)
+* 02017 Mar 2X (v1.0): One Point Zero
+	* New XT-L-KRAB model, from steedcrugeon.  (The old model has been made unresearchable, and will be removed in the next release.)
+	* Changed SoftLanding calculation so that it no longer fires late in landers with TWRs below 5 or so.  Again, be advised that solid rocket motors do not throttle, so there will be a drop after they cut out!  Bring airbags, girders, or something crushable to land on...
+	* Adjusted rearm/settle conditions for landertron box to be less 'bouncy'.
 
 ##Roadmap
 
@@ -97,7 +99,7 @@ Just keeping it ticking along.   Please let us know in the thread or on the [**i
 
 ##Credits / License
 
-* Source code and DLL licensed under [**GNU GPL**](http://www.gnu.org/licenses/gpl.html) (v3 or later).  Variously by XanderTek, Kerbas_ad_astra, charfa, and Booots.  If you rele
+* Source code and DLL licensed under [**GNU GPL**](http://www.gnu.org/licenses/gpl.html) (v3 or later).  Variously by XanderTek, Kerbas_ad_astra, charfa, and Booots.
 * SolidFuel HexCan part based on Greys' [**HexCans**](http://forum.kerbalspaceprogram.com/threads/33754-0-25-HexCans-Standardized-Resource-Canisters-0-7-1-Breaking-Ground-Edition), licensed under [**CC-BY-SA**](https://creativecommons.org/licenses/by-sa/2.0/).
 * Landertron parts based on [**models by BahamutoD**](http://forum.kerbalspaceprogram.com/threads/82341-1-0-B-Dynamics-Retracting-vectoring-engines-etc-v1-2-0-%28May-6%29), licensed under [**CC-BY-SA**](https://creativecommons.org/licenses/by-sa/2.0/).
 * XT-L-KRAB model by steedcrugeon, licensed under [**CC-BY-SA**](https://creativecommons.org/licenses/by-sa/4.0/) (4.0 or later).
