@@ -6,7 +6,9 @@
 
 ##Features
 
-Landertrons are small solid rocket motors which can be mounted on a craft and set to automatically fire in one of three modes:
+![Part catalog](https://raw.githubusercontent.com/Kerbas-ad-astra/XTLandertron/master/Screenshots/screenshot0.png)
+
+Landertrons (left to right: XT-L1, XT-L2, XT-L2B) are small solid rocket motors which can be mounted on a craft and set to automatically fire in one of three modes:
 
 * **SoftLanding**, firing to *brake* a rocket's descent and prevent the rocket from *breaking*.  Note that the engines will cut out when the craft is above the ground, so be ready for a bit of a drop!
 * **ShortLanding**, firing to arrest a spaceplane's momentum on landing.
@@ -14,9 +16,9 @@ Landertrons are small solid rocket motors which can be mounted on a craft and se
 
 A landertron will only fire if it can make a positive contribution to its desired mode, and will cut out automatically, but it's up to you to put them in the proper quantity and orientation to get the job done.
 
-If KAS and KIS are installed, then the landertrons can be refueled using the included hex-cans of solid fuel.  Just attach them to spent landertrons, and you will be ready to fly again in no time.
+If KAS and KIS are installed, then the landertrons can be refueled using the included hex-cans of solid fuel (far left).  Just attach them to spent landertrons, and you will be ready to fly again in no time.  (The XT-L1 requires one can each, and the XT-L2 and -L2B require two cans each.)
 
-There is also an XT-L-KRAB "Landertron Box", which will attempt to control a spacecraft's engines as if they were landertrons.  Warranty void if used for critical mission phases!
+There is also an XT-L-KRAB "Landertron Box" (far right), which will attempt to control a spacecraft's engines as if they were landertrons.  Warranty void if used for critical mission phases!
 
 ##Recommended addons
 
@@ -92,6 +94,7 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 	* New XT-L-KRAB model to replace the XT-LB, from steedcrugeon.  (The old model has been made unresearchable, and will be removed in the next release.)
 	* Changed SoftLanding calculation so that it no longer fires late in landers with TWRs below 5 or so.  Again, be advised that solid rocket motors do not throttle, so there will be a drop after they cut out!  Bring airbags, girders, or something crushable to land on...
 	* Adjusted rearm/settle conditions for landertron box to be less 'bouncy'.
+	* Added subtle up-arrows to XT-L2, to clarify which way to orient it.
 
 ##Roadmap
 
