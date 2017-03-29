@@ -89,7 +89,7 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 * 02016 Oct 13 0340 UTC (v0.15): Crunch!
 	* Packaged the right DLL this time...
 * 02017 Mar 2X (v1.0): One Point Zero
-	* New XT-L-KRAB model, from steedcrugeon.  (The old model has been made unresearchable, and will be removed in the next release.)
+	* New XT-L-KRAB model to replace the XT-LB, from steedcrugeon.  (The old model has been made unresearchable, and will be removed in the next release.)
 	* Changed SoftLanding calculation so that it no longer fires late in landers with TWRs below 5 or so.  Again, be advised that solid rocket motors do not throttle, so there will be a drop after they cut out!  Bring airbags, girders, or something crushable to land on...
 	* Adjusted rearm/settle conditions for landertron box to be less 'bouncy'.
 
@@ -104,4 +104,4 @@ Just keeping it ticking along.   Please let us know in the thread or on the [**i
 * Landertron parts based on [**models by BahamutoD**](http://forum.kerbalspaceprogram.com/threads/82341-1-0-B-Dynamics-Retracting-vectoring-engines-etc-v1-2-0-%28May-6%29), licensed under [**CC-BY-SA**](https://creativecommons.org/licenses/by-sa/2.0/).
 * XT-L-KRAB model by steedcrugeon, licensed under [**CC-BY-SA**](https://creativecommons.org/licenses/by-sa/4.0/) (4.0 or later).
 
-Any redistributions must use a different name and folder (per the GPL section 7c).  All other rights (e.g. the Landertrons logo) reserved.
+Any redistributions or derivative works must use a different name and folder (per the GPL section 7c).  All other rights (e.g. the Landertrons logo) reserved.
