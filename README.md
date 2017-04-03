@@ -90,7 +90,7 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 	* Added .version file.
 * 02016 Oct 13 0340 UTC (v0.15): Crunch!
 	* Packaged the right DLL this time...
-* 02017 Apr 03 (v1.0.0): Terminal Maneuver
+* 02017 Apr 03 (v1.0.0): Terminal Burn
 	* New XT-L-KRAB model to replace the XT-LB, from steedcrugeon.  (The old model has been made unresearchable, and will be removed in the next release.)
 	* Changed SoftLanding calculation so that it no longer fires late in landers with TWRs below 5 or so.  Again, be advised that solid rocket motors do not throttle, so there will be a drop after they cut out!  Bring airbags, girders, or something crushable to land on...
 	* Adjusted rearm/settle conditions for landertron box to be less 'bouncy'.
