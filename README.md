@@ -95,6 +95,10 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 	* Changed SoftLanding calculation so that it no longer fires late in landers with TWRs below 5 or so.  Again, be advised that solid rocket motors do not throttle, so there will be a drop after they cut out!  Bring airbags, girders, or something crushable to land on...
 	* Adjusted rearm/settle conditions for landertron box to be less 'bouncy'.
 	* Added subtle up-arrows to XT-L2, to clarify which way to orient it.
+* 02017 06 10 (v1.1.0): I-D-18-N
+	* Updated for KSP 1.3.
+	* Completed deprecation of old XT-LB model.
+	* Accommodates new internationalization system.
 
 ##Roadmap
 
