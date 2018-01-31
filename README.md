@@ -4,7 +4,7 @@
 
 ![Landertrons logo](https://github.com/Kerbas-ad-astra/XTLandertron/raw/master/Landertron-logo.png)
 
-##Features
+## Features
 
 ![Part catalog](https://raw.githubusercontent.com/Kerbas-ad-astra/XTLandertron/master/Screenshots/screenshot0.png)
 
@@ -20,22 +20,22 @@ If KAS and KIS are installed, then the landertrons can be refueled using the inc
 
 There is also an XT-L-KRAB "Landertron Box" (far right), which will attempt to control a spacecraft's engines as if they were landertrons.  Warranty void if used for critical mission phases!
 
-##Recommended addons
+## Recommended addons
 
 * [**Home Grown Rockets**](http://forum.kerbalspaceprogram.com/index.php?/topic/55521-102hgr-1875m-partsv130-released/) (plus [HGR Community Fixes](http://forum.kerbalspaceprogram.com/index.php?/topic/131556-104-5-hgr-community-fixes-home-grown-fixes-for-home-grown-rockets-v12-2016-mar-01/)) have retro-rockets in their "SoyJuice" descent modules.  With Landertron, they will automatically fire to soften their landings, just like the real Soyuz pods.  (Note that they are not capable of substituting for parachutes!)
 
-##Download and install
+## Download and install
 
 * [**GitHub**](https://github.com/Kerbas-ad-astra/XTLandertron/releases)
 * CurseForge
 
 From there, just unzip the "Landertron" folder into your GameData directory.
 
-##Known and anticipated issues
+## Known and anticipated issues
 
 None at this time.  Please let us know in the thread or on the [**issue tracker**](https://github.com/Kerbas-ad-astra/XTLandertron/issues) if you find any.
 
-##Version history and changelog
+## Version history and changelog
 
 * 2014 Oct 10 (0.08): [XanderTek's last release](http://forum.kerbalspaceprogram.com/index.php?/topic/55798-10-xt-landertron-smart-retrorockets-for-landers-and-spaceplanes-v008-oct-10/), for 0.25.
 * 2015 Sep 06 (v0.09-beta.KAA): Restored functionality.
@@ -100,11 +100,11 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 	* Completed deprecation of old XT-LB model.
 	* Accommodates new internationalization system.
 
-##Roadmap
+## Roadmap
 
 Just keeping it ticking along.   Please let us know in the thread or on the [**issue tracker**](https://github.com/Kerbas-ad-astra/XTLandertron/issues) if you have any suggestions.
 
-##Credits / License
+## Credits / License
 
 * Source code and DLL licensed under [**GNU GPL**](http://www.gnu.org/licenses/gpl.html) (v3 or later).  Variously by XanderTek, Kerbas_ad_astra, charfa, and Booots.
 * SolidFuel HexCan part based on Greys' [**HexCans**](http://forum.kerbalspaceprogram.com/threads/33754-0-25-HexCans-Standardized-Resource-Canisters-0-7-1-Breaking-Ground-Edition), licensed under [**CC-BY-SA**](https://creativecommons.org/licenses/by-sa/2.0/).
