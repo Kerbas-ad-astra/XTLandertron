@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using KSP.Localization;
 
 namespace Landertron
 {
@@ -104,9 +105,10 @@ namespace Landertron
             get
             {
                 Vector3d vector = Vector3d.zero;
-				for (int i = 0; i < engine.thrustTransforms.Count; i++) {
-					vector -= engine.thrustTransforms [i].forward * engine.thrustTransformMultipliers [i];
-				}
+                for (int i = 0; i < engine.thrustTransforms.Count; i++)
+                {
+                    vector -= engine.thrustTransforms[i].forward * engine.thrustTransformMultipliers[i];
+                }
                 vector.Normalize();
                 double isp = engine.atmosphereCurve.Evaluate((float)engine.part.staticPressureAtm);
                 double fuelFlow = Mathf.Lerp(engine.minFuelFlow, engine.maxFuelFlow, engine.thrustPercentage / 100);
@@ -161,7 +163,7 @@ namespace Landertron
         public void arm()
         {
             if (status != Status.Idle)
-                throw new InvalidOperationException("Can only be armed when Idle, was " + status.ToString());
+                throw new InvalidOperationException(Localizer.Format("#autoLOC_XTL_invalid_arm", statusString(status)));
             status = Status.Armed;
             part.force_activate();
         }
@@ -175,7 +177,7 @@ namespace Landertron
         public void disarm()
         {
             if (status != Status.Armed)
-                throw new InvalidOperationException("Can only be disarmed when Armed, was " + status.ToString());
+                throw new InvalidOperationException(Localizer.Format("#autoLOC_XTL_invalid_disarm", statusString(status)));
             status = Status.Idle;
         }
         [KSPAction("Disarm")]
@@ -211,7 +213,7 @@ namespace Landertron
 
         public override void OnSave(ConfigNode node)
         {
-            node.SetValue("mode", mode.ToString(), true);
+            node.SetValue("mode", mode.ToString(), true);  // Do not localize these!  This is for internal state saving, not external display.
             node.SetValue("status", status.ToString(), true);
         }
 
@@ -236,6 +238,14 @@ namespace Landertron
                 part.attachRules.allowSrfAttach = true;
 
             animStates = setUpAnimation(animationName, part);
+
+            // Localize event and action names
+            Events["arm"].guiName = Localizer.Format("#autoLOC_XTL_arm_guiname");
+            Events["disarm"].guiName = Localizer.Format("#autoLOC_XTL_disarm_guiname");
+			Events["nextMode"].guiName = Localizer.Format("#autoLOC_XTL_setMode_guiname", modeString(_mode));
+            Actions["armAction"].guiName = Localizer.Format("#autoLOC_XTL_arm_guiname");
+            Actions["disarmAction"].guiName = Localizer.Format("#autoLOC_XTL_disarm_guiname");
+            Fields["displayStatus"].guiName = Localizer.Format("#autoLOC_XTL_displayStatus_guiname");
         }
 
         public override void OnActive()
@@ -307,7 +317,7 @@ namespace Landertron
         protected void setMode(Mode value)
         {
             _mode = value;
-            Events["nextMode"].guiName = "Mode: " + mode.ToString();
+            Events["nextMode"].guiName = Localizer.Format("#autoLOC_XTL_setMode_guiname", modeString(mode));
         }
 
         protected void setStatus(Status value)
@@ -317,7 +327,7 @@ namespace Landertron
             switch (_status)
             {
                 case Status.Idle:
-                    displayStatus = "Idle";
+                    displayStatus = Localizer.Format("#autoLOC_XTL_Status_Idle");
                     part.stackIcon.SetIconColor(XKCDColors.White);
                     animDeployed = false;
                     Events["arm"].active = true;
@@ -326,7 +336,7 @@ namespace Landertron
                     Actions["disarmAction"].active = false;
                     break;
                 case Status.Armed:
-                    displayStatus = "Armed";
+                    displayStatus = Localizer.Format("#autoLOC_XTL_Status_Armed");
                     part.stackIcon.SetIconColor(XKCDColors.LightCyan);
                     animDeployed = true;
                     Events["arm"].active = false;
@@ -335,7 +345,7 @@ namespace Landertron
                     Actions["disarmAction"].active = true;
                     break;
                 case Status.Firing:
-                    displayStatus = "Firing!";
+                    displayStatus = Localizer.Format("#autoLOC_XTL_Status_Firing");
                     part.stackIcon.SetIconColor(XKCDColors.RadioactiveGreen);
                     animDeployed = true;
                     Events["arm"].active = false;
@@ -344,7 +354,7 @@ namespace Landertron
                     Actions["disarmAction"].active = false;
                     break;
                 case Status.Empty:
-                    displayStatus = "Empty";
+                    displayStatus = Localizer.Format("#autoLOC_XTL_Status_Empty");
                     part.stackIcon.SetIconColor(XKCDColors.DarkGrey);
                     animDeployed = true;
                     Events["arm"].active = false;
@@ -358,7 +368,7 @@ namespace Landertron
         protected void refuel()
         {
             bool justrefueled = false;
-            for (int i = 0; i < part.children.Count; )
+            for (int i = 0; i < part.children.Count;)
             {
                 Part p = part.children[i];
                 if (p.Resources.Contains(propellantResource.info.id) && propellantResource.amount < propellantResource.maxAmount)
@@ -433,6 +443,38 @@ namespace Landertron
                         anim.normalizedTime = 0;
                     }
                 }
+            }
+        }
+
+        protected String statusString(Status stat)
+        {
+            switch (stat)
+            {
+                case Status.Idle:
+                    return Localizer.Format("#autoLOC_XTL_Status_Idle");
+                case Status.Armed:
+                    return Localizer.Format("#autoLOC_XTL_Status_Armed");
+                case Status.Firing:
+                    return Localizer.Format("#autoLOC_XTL_Status_Firing");
+                case Status.Empty:
+                    return Localizer.Format("#autoLOC_XTL_Status_Empty");
+                default:
+                    return "";
+            }
+        }
+
+        protected String modeString(Mode mode)
+        {
+            switch (mode)
+            {
+                case Mode.StayPut:
+                    return Localizer.Format("#autoLOC_XTL_Mode_StayPut");
+                case Mode.SoftLanding:
+                    return Localizer.Format("#autoLOC_XTL_Mode_SoftLanding");
+                case Mode.ShortLanding:
+                    return Localizer.Format("#autoLOC_XTL_Mode_ShortLanding");
+                default:
+                    return "";
             }
         }
     }

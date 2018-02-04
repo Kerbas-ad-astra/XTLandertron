@@ -99,6 +99,8 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 	* Updated for KSP 1.3.
 	* Completed deprecation of old XT-LB model.
 	* Accommodates new internationalization system.
+* 02018 XX XX (v1.1.1): From en-us With Love
+	* Added some strings to the localization file.  Now the display strings from the code (e.g. mode names) can be localized as well.
 
 ## Roadmap
 

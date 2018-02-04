@@ -54,6 +54,11 @@ namespace Landertron
                 return false;
             
             double gravity = FlightGlobals.currentMainBody.gravParameter / Math.Pow(FlightGlobals.currentMainBody.Radius, 2.0);
+			//double currentAcc = FlightGlobals.ship_geeForce*9.80665;
+			//if (FlightGlobals.currentMainBody.atmosphere && ((currentAcc/gravity) < 1.1))  // A body in free-fall experiences 0 geeForce, a body exactly at terminal velocity experiences 1 G (or whatever the local acceleration of gravity is).  If currentAcc is >1.1G, assume it's not at terminal velocity and use the more conservative calculation of assuming no atmosphere.
+			//{
+			//	gravity = Math.Min(gravity, Math.Abs(gravity - currentAcc));  //In case there's anything weird going on, let's prevent gravity from becoming negative
+			//}
 			double finalAcc = Vector3d.Dot(down, thrustDirection)*gravity + combinedThrust.magnitude / vessel.GetTotalMass();
 			double predictedSpeed = Math.Sqrt(Math.Pow(projectedSpeed, 2.0) + 2 * distanceToGroundVert * gravity);
 			log.debug("Projspeed: " + projectedSpeed + " predspeed: " + predictedSpeed);
