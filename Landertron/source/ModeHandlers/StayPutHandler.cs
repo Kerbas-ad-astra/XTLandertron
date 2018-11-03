@@ -37,8 +37,8 @@ namespace Landertron
         {
             Vector3d thrustDirection = calculateCombinedThrust(firingLandertrons).normalized;
             Vector3d down = (vessel.mainBody.position - vessel.CoM).normalized;
-            RaycastHit surface;
-            Physics.Raycast(vessel.CoM, down, out surface, float.PositiveInfinity, 1 << 15);
+            //RaycastHit surface;
+            Physics.Raycast(vessel.CoM, down, out RaycastHit surface, float.PositiveInfinity, 1 << 15);
             return Vector3d.Dot(thrustDirection, surface.normal) >= 0;
         }
     }

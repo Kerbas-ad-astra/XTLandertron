@@ -33,7 +33,9 @@ From there, just unzip the "Landertron" folder into your GameData directory.
 
 ## Known and anticipated issues
 
-None at this time.  Please let us know in the thread or on the [**issue tracker**](https://github.com/Kerbas-ad-astra/XTLandertron/issues) if you find any.
+The math used in this mod is simplified compared to the real (non-linear) physics of propulsive landing, and so it does not function very well with vehicles with low TWR or high atmospheric drag.  Run some test flights before sending any valuable crew or payloads, and be ready for a bumpy landing!
+
+Please let us know in the thread or on the [**issue tracker**](https://github.com/Kerbas-ad-astra/XTLandertron/issues) if you find any more.
 
 ## Version history and changelog
 
@@ -95,11 +97,11 @@ None at this time.  Please let us know in the thread or on the [**issue tracker*
 	* Changed SoftLanding calculation so that it no longer fires late in landers with TWRs below 5 or so.  Again, be advised that solid rocket motors do not throttle, so there will be a drop after they cut out!  Bring airbags, girders, or something crushable to land on...
 	* Adjusted rearm/settle conditions for landertron box to be less 'bouncy'.
 	* Added subtle up-arrows to XT-L2, to clarify which way to orient it.
-* 02017 06 10 (v1.1.0): I-D-18-N
+* 02017 Jun 10 (v1.1.0): I-D-18-N
 	* Updated for KSP 1.3.
 	* Completed deprecation of old XT-LB model.
 	* Accommodates new internationalization system.
-* 02018 XX XX (v1.1.1): From en-us With Love
+* 02018 Nov 03 (v1.1.1): From en-us With Love
 	* Added some strings to the localization file.  Now the display strings from the code (e.g. mode names) can be localized as well.
 
 ## Roadmap
