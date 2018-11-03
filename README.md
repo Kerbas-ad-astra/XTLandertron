@@ -22,7 +22,7 @@ There is also an XT-L-KRAB "Landertron Box" (far right), which will attempt to c
 
 ## Recommended addons
 
-* [**Home Grown Rockets**](http://forum.kerbalspaceprogram.com/index.php?/topic/55521-102hgr-1875m-partsv130-released/) (plus [HGR Community Fixes](http://forum.kerbalspaceprogram.com/index.php?/topic/131556-104-5-hgr-community-fixes-home-grown-fixes-for-home-grown-rockets-v12-2016-mar-01/)) have retro-rockets in their "SoyJuice" descent modules.  With Landertron, they will automatically fire to soften their landings, just like the real Soyuz pods.  (Note that they are not capable of substituting for parachutes!)
+* The "SoyJuice" descent modules from [**Home Grown Rockets**](https://forum.kerbalspaceprogram.com/index.php?/topic/131556-14-hgr-community-fixes-home-grown-fixes-for-home-grown-rockets-v160-02018-mar-23/) have retro-rockets.  With Landertron, they will automatically fire to soften their landings, just like the real Soyuz pods.  (Note that they are not capable of substituting for parachutes!)
 
 ## Download and install
 
