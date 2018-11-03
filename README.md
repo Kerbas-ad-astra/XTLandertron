@@ -33,7 +33,7 @@ From there, just unzip the "Landertron" folder into your GameData directory.
 
 ## Known and anticipated issues
 
-The math used in this mod is simplified compared to the real (non-linear) physics of propulsive landing, and so it does not function very well with vehicles with low TWR or high atmospheric drag.  Run some test flights before sending any valuable crew or payloads, and be ready for a bumpy landing!
+The math used in this mod is simplified compared to the real (non-linear) physics of propulsive landing, and so it does not function very well with vehicles with low TWR (<2) or high atmospheric drag.  Run some test flights before sending any valuable crew or payloads, and be ready for a bumpy landing!
 
 Please let us know in the thread or on the [**issue tracker**](https://github.com/Kerbas-ad-astra/XTLandertron/issues) if you find any more.
 
