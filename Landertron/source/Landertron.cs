@@ -45,7 +45,7 @@ namespace Landertron
         public bool refuelable = true;
 
         [KSPField]
-        public float electricRate = 0.05f;
+        public double electricRate = 0.05f;
 
         [KSPField(isPersistant = false, guiActive = true, guiName = "Status")]
         public string displayStatus = "Idle";
@@ -276,7 +276,7 @@ namespace Landertron
             }
             if (status == Status.Armed)
             {
-                float electricReq = electricRate * TimeWarp.fixedDeltaTime;
+                double electricReq = electricRate * TimeWarp.fixedDeltaTime;
                 if (part.RequestResource("ElectricCharge", electricReq) < electricReq)
                 {
                     disarm();

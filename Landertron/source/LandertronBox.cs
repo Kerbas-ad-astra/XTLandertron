@@ -155,7 +155,7 @@ namespace Landertron
 
             if (status == Status.Armed)
             {
-                float electricReq = electricRate * TimeWarp.fixedDeltaTime;
+                double electricReq = electricRate * TimeWarp.fixedDeltaTime;
                 if (part.RequestResource("ElectricCharge", electricReq) < electricReq)
                 {
                     disarm();
