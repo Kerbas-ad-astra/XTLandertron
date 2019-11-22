@@ -20,10 +20,6 @@ If KAS and KIS are installed, then the landertrons can be refueled using the inc
 
 There is also an XT-L-KRAB "Landertron Box" (far right), which will attempt to control a spacecraft's engines as if they were landertrons.  Warranty void if used for critical mission phases!
 
-## Recommended addons
-
-- The "SoyJuice" descent modules from [**Home Grown Rockets**](https://forum.kerbalspaceprogram.com/index.php?/topic/131556-14-hgr-community-fixes-home-grown-fixes-for-home-grown-rockets-v160-02018-mar-23/) have retro-rockets.  With Landertron, they will automatically fire to soften their landings, just like the real Soyuz pods.  (Note that they are not capable of substituting for parachutes!)
-
 ## Download and install
 
 - [**GitHub**](https://github.com/Kerbas-ad-astra/XTLandertron/releases)
@@ -105,6 +101,9 @@ Please let us know in the thread or on the [**issue tracker**](https://github.co
 	- Added some strings to the localization file.  Now the display strings from the code (e.g. mode names) can be localized as well.
 - 02019 Nov 12 (v1.1.2): 4.5 Roentgens
 	- Recompiled with .NET Framework 4.5 for KSP 1.8.x.
+- 02019 Nov 2x (v1.2.0): Judge Me By My Size, Do You?
+	- Shrunk the XT-L-KRAB model to fit on probes a little better.
+	- Fixed the electric charge consumption.
 
 ## Roadmap
 
