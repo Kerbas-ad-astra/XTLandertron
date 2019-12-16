@@ -277,7 +277,7 @@ namespace Landertron
             if (status == Status.Armed)
             {
                 double electricReq = electricRate * TimeWarp.fixedDeltaTime;
-                if (part.RequestResource("ElectricCharge", electricReq) < (0.9 * electricReq))
+                if (part.RequestResource("ElectricCharge", electricReq) < (0.99 * electricReq))
                 {
                     disarm();
                     ScreenMessages.PostScreenMessage("Landertron out of electric charge, disarming!", 5, ScreenMessageStyle.UPPER_CENTER);

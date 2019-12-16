@@ -101,8 +101,8 @@ Please let us know in the thread or on the [**issue tracker**](https://github.co
 	- Added some strings to the localization file.  Now the display strings from the code (e.g. mode names) can be localized as well.
 - 02019 Nov 12 (v1.1.2): 4.5 Roentgens
 	- Recompiled with .NET Framework 4.5 for KSP 1.8.x.
-- 02019 Nov 2x (v1.2.0): Judge Me By My Size, Do You?
-	- Shrunk the XT-L-KRAB model to fit on probes a little better.
+- 02019 Dec 16 (v1.2.0): Judge Me By My Size, Do You?
+	- Shrunk the XT-L-KRAB model to fit on probes a little better.  (Thanks, @Y3mo.)
 	- Fixed the electric charge consumption.
 
 ## Roadmap
